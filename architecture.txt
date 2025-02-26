@@ -1,0 +1,19 @@
+/server
+ ├── /data                 # Local storage for images & annotations (ignored in .gitignore)
+ │    ├── /val_images
+ │    │    ├── /frankfurt
+ │    │    ├── /lindau
+ │    │    ├── /munster
+ │    ├── /val_annotations
+ │         ├── /frankfurt
+ │         ├── /lindau
+ │         ├── /munster
+ ├── /routes
+ │    ├── images.js
+ │    ├── annotations.js
+ ├── /controllers           # API logic
+ │    ├── imageController.js
+ │    ├── annotationController.js
+ ├── .gitignore 
+ ├── package.json           # Dependencies
+ ├── server.js              # Main server entry point
