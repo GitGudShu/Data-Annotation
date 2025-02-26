@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Routes
+const imageRoutes = require('./routes/images');
+const annotationRoutes = require('./routes/annotations');
+app.use('/api/images', imageRoutes);
+app.use('/api/annotations', annotationRoutes);
+
 // Root endpoint
 app.get('/', (req, res) => {
     res.json({ message: "Hello from the Node.js backend!" });
