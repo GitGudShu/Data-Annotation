@@ -11,6 +11,8 @@ import { ImageViewerComponent } from './components/image-viewer/image-viewer.com
 import { AnnotationFormComponent } from './components/annotation-form/annotation-form.component';
 import { TutorialModalComponent } from './components/tutorial-modal/tutorial-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ImageCardComponent } from './components/image-card/image-card.component';
+import { ImageListComponent } from './components/image-list/image-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ImageViewerComponent,
     AnnotationFormComponent,
     TutorialModalComponent,
-    NavbarComponent
+    NavbarComponent,
+    ImageCardComponent,
+    ImageListComponent
   ],
   imports: [
     BrowserModule,

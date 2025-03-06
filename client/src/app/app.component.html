@@ -81,14 +81,8 @@
 
 <div class="content" role="main">
 
-  <!-- Main page content -->
-  <div *ngIf="randomImageUrl; else loading">
-    <img [src]="randomImageUrl" alt="Random City Image" width="600">
-  </div>
-
-  <ng-template #loading>
-    <p>Loading image...</p>
-  </ng-template>
+  <!-- Home page -->
+  <app-home></app-home>
 
   <!-- Footer -->
   <footer>
