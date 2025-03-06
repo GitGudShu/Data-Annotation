@@ -17,3 +17,58 @@
  ├── .gitignore 
  ├── package.json           # Dependencies
  ├── server.js              # Main server entry point
+
+ app/
+│── classes/                   # (Level 3) Data models (e.g., Image, Annotation, User)
+│   ├── image.model.ts         # Image metadata & segmentation info
+│   ├── annotation.model.ts    # Annotation structure (danger level, justification)
+│   ├── user.model.ts          # User metadata (for tutorial progress, tracking)
+│
+│── components/                # (Level 3) Reusable UI components
+│   ├── annotation-form/       # Component for annotating a selected object
+│   │   ├── annotation-form.component.ts
+│   │   ├── annotation-form.component.html
+│   │   ├── annotation-form.component.css
+│   │
+│   ├── image-viewer/          # Displays images with interactive segmentation overlays
+│   │   ├── image-viewer.component.ts
+│   │   ├── image-viewer.component.html
+│   │   ├── image-viewer.component.css
+│   │
+│   ├── tutorial-modal/        # Pop-up modal for the mandatory tutorial
+│   │   ├── tutorial-modal.component.ts
+│   │   ├── tutorial-modal.component.html
+│   │   ├── tutorial-modal.component.css
+│   │
+│   ├── navbar/                # Navigation bar component
+│   │   ├── navbar.component.ts
+│   │   ├── navbar.component.html
+│   │   ├── navbar.component.css
+│
+│── pages/                     # (Level 2) Page-level components
+│   ├── home/                  # Home page displaying available images
+│   │   ├── home.component.ts
+│   │   ├── home.component.html
+│   │   ├── home.component.css
+│   │
+│   ├── annotation/            # Image annotation workspace
+│   │   ├── annotation.component.ts
+│   │   ├── annotation.component.html
+│   │   ├── annotation.component.css
+│   │
+│   ├── admin-panel/           # Administration panel (user progress tracking, review annotations)
+│   │   ├── admin-panel.component.ts
+│   │   ├── admin-panel.component.html
+│   │   ├── admin-panel.component.css
+│
+│── services/                  # (Level 2) Services for handling API interactions
+│   ├── image.service.ts       # Fetches images from the dataset
+│   ├── annotation.service.ts  # Handles saving annotations to the JSON
+│   ├── user.service.ts        # Manages user progress (e.g., tutorial completion)
+│
+│── assets/                    # Static assets (images, icons, etc.)
+│
+│── app-routing.module.ts      # Routing module for navigation
+│── app.component.ts           # Root component (Level 1)
+│── app.component.html         # Contains <router-outlet> for page rendering
+│── app.module.ts              # Main Angular module
