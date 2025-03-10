@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +15,7 @@ import { AnnotationFormComponent } from './components/annotation-form/annotation
 import { TutorialModalComponent } from './components/tutorial-modal/tutorial-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
+import { ImageIdParserPipe } from './pipes/image-id-parser.pipe';
 
 @NgModule({
   declarations: [
@@ -25,12 +28,15 @@ import { ImageCardComponent } from './components/image-card/image-card.component
     TutorialModalComponent,
     NavbarComponent,
     ImageCardComponent,
+    ImageIdParserPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

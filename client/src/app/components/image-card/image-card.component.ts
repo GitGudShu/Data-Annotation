@@ -8,4 +8,5 @@ import { Image } from '../../classes/image';
 })
 export class ImageCardComponent {
   @Input() image!: Image;
+  hover: boolean = false;
 }

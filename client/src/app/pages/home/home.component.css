@@ -3,3 +3,22 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+
+.city-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+mat-button-toggle {
+  padding: 10px 20px;
+  min-width: 120px; /* Ensures consistent width */
+  text-align: center;
+  font-size: 16px;
+}
+
+mat-button-toggle-group {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

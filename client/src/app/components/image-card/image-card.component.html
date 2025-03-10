@@ -1,4 +1,9 @@
-<div class="image-card">
-  <img [src]="image.imagePath" alt="Cityscape Image">
-  <p>{{ image.id }}</p>
-</div>
+<a [routerLink]="['/edit', image.id]" class="image-card-link">
+  <div class="image-card" [ngStyle]="{ 'transition': 'transform 0.3s ease-in-out' }"
+       (mouseover)="hover = true"
+       (mouseleave)="hover = false"
+       [ngStyle]="{ 'transform': hover ? 'scale(1.05)' : 'scale(1)' }">
+    <img [src]="image.imagePath" alt="Cityscape Image">
+    <p>{{ image.id | imageIdParser:image.city }}</p>
+  </div>
+</a>

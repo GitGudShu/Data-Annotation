@@ -1,8 +1,16 @@
-<select [(ngModel)]="selectedCity" (change)="fetchImages()">
-  <option value="frankfurt">Frankfurt</option>
-  <option value="lindau">Lindau</option>
-  <option value="munster">Münster</option>
-</select>
+<div class="city-toggle">
+  <mat-button-toggle-group
+    [(ngModel)]="selectedCity"
+    (change)="fetchImages()"
+    aria-label="Select City"
+    >
+
+    <mat-button-toggle value="frankfurt">Frankfurt</mat-button-toggle>
+    <mat-button-toggle value="lindau">Lindau</mat-button-toggle>
+    <mat-button-toggle value="munster">Münster</mat-button-toggle>
+
+  </mat-button-toggle-group>
+</div>
 
 <div class="image-grid">
   <app-image-card *ngFor="let image of images" [image]="image"></app-image-card>
