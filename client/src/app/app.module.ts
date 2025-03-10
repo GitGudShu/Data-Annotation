@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +13,6 @@ import { AnnotationFormComponent } from './components/annotation-form/annotation
 import { TutorialModalComponent } from './components/tutorial-modal/tutorial-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
-import { ImageListComponent } from './components/image-list/image-list.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +25,12 @@ import { ImageListComponent } from './components/image-list/image-list.component
     TutorialModalComponent,
     NavbarComponent,
     ImageCardComponent,
-    ImageListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

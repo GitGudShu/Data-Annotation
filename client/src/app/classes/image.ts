@@ -3,7 +3,8 @@ import { Annotation } from "./annotation";
 export class Image {
   constructor(
     public id: string,
-    public filePath: string,
+    public imagePath: string,
+    public annotationsPath: string,
     public city: string,
     public width?: number,
     public height?: number,
@@ -13,7 +14,8 @@ export class Image {
   static fromJSON(json: any): Image {
     return new Image(
       json.id,
-      json.filePath,
+      json.imagePath,
+      json.annotationsPath,
       json.city,
       json.width,
       json.height,
@@ -22,6 +24,11 @@ export class Image {
   }
 
   static fromMinimalJSON(json: any): Image {
-    return new Image(json.id, json.filePath, json.city);
+    return new Image(
+      json.id,
+      `http://localhost:5000${json.imagePath}`,
+      `http://localhost:5000${json.annotationsPath}`,
+      json.city
+    );
   }
 }
