@@ -1,4 +1,4 @@
-<a [routerLink]="['/edit', image.id]" class="image-card-link">
+<a (click)="toEdit()" class="image-card-link">
   <div class="image-card" [ngStyle]="{ 'transition': 'transform 0.3s ease-in-out' }"
        (mouseover)="hover = true"
        (mouseleave)="hover = false"

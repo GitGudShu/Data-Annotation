@@ -17,4 +17,11 @@ export class ImageService {
       map(response => response.map(data => Image.fromMinimalJSON(data)))
     );
   }
+
+  getImageById(city: string, imageId: string): Observable<Image> {
+    const url = `http://localhost:5000/api/images/${city}/${imageId}`;
+    return this.http.get<any>(url).pipe(
+      map(response => Image.fromMinimalJSON(response)) // Convert to Image object
+    );
+  }
 }

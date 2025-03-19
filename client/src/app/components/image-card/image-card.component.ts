@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Image } from '../../classes/image';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-image-card',
@@ -9,4 +10,11 @@ import { Image } from '../../classes/image';
 export class ImageCardComponent {
   @Input() image!: Image;
   hover: boolean = false;
+
+  constructor(private router: Router) {}
+
+  toEdit(): void {
+    console.log('Navigating to image ID:', this.image.id);
+    this.router.navigate(['/edit', this.image.city, this.image.id]);
+  }
 }

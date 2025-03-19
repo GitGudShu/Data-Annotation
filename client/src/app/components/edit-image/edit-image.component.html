@@ -1,1 +1,38 @@
-<p>edit-image works!</p>
+<div class="edit-image-container">
+  <!-- Back Button -->
+  <button class="back-button" (click)="goBack()">← Back</button>
+
+  <!-- Image Editing Area -->
+  <div class="image-editor">
+    <!-- Image and Overlay -->
+    <div class="image-container">
+      <img *ngIf="image" [src]="image.imagePath" alt="Selected Image" class="full-image">
+      <div class="overlay-container">
+        <!-- Overlays will go here in the future -->
+      </div>
+    </div>
+
+    <!-- Annotation Panel -->
+    <div class="annotation-panel">
+      <h3>Annotations</h3>
+
+      <!-- Image ID Display -->
+      <p><strong>Image ID:</strong> {{ imageId }}</p>
+      <p><strong>City:</strong> {{ city }}</p>
+
+      <!-- Annotation Description -->
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="annotationDescription" placeholder="Enter description..."></textarea>
+
+      <!-- Danger Level Selection -->
+      <label for="danger-level">Danger Level:</label>
+      <input type="number" id="danger-level" min="1" max="5" [(ngModel)]="dangerLevel">
+
+      <!-- Save and Cancel Buttons -->
+      <div class="button-group">
+        <button class="save-button" (click)="saveAnnotation()">Save</button>
+        <button class="cancel-button" (click)="clearForm()">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
