@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ImageService } from 'src/app/services/image.service';
-import { Image } from 'src/app/classes/image';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-image',
@@ -11,35 +10,49 @@ import { Image } from 'src/app/classes/image';
 export class EditImageComponent implements OnInit {
   imageId!: string;
   city!: string;
-  image!: Image; // Store image data
+  imageUrl!: string;
+  annotationUrl!: string;
   annotationDescription: string = '';
   dangerLevel: number = 1;
 
+  polygons: { label: string, points: string }[] = [];
+  imageWidth!: number;
+  imageHeight!: number;
+  displayedWidth!: number;
+  displayedHeight!: number;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.city = this.activatedRoute.snapshot.paramMap.get('city') || '';
     this.imageId = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
-    console.log('Fetching image:', this.city, this.imageId);
+    this.imageUrl = `http://localhost:5000/api/images/${this.city}/${this.imageId}`;
+    this.annotationUrl = `http://localhost:5000/api/annotations/${this.city}/${this.imageId}`;
 
-    if (this.city && this.imageId) {
-      this.imageService.getImageById(this.city, this.imageId).subscribe(image => {
-        this.image = image;
-        console.log('Image data loaded:', this.image);
-      });
-    }
+    // Annotation json parsing here
+    this.http.get<any>(this.annotationUrl).subscribe(annotation => {
+      this.imageWidth = annotation.imgWidth;
+      this.imageHeight = annotation.imgHeight;
+      this.polygons = annotation.objects.map((obj: any) => ({
+        label: obj.label,
+        points: obj.polygon.map((p: number[]) => p.join(',')).join(' ')
+      }));
+    });
+
+    console.log('Edit image:', this.city, this.imageId);
+    console.log('Image URL:', this.imageUrl);
+    console.log('Annotation URL:', this.annotationUrl);
   }
 
   goBack(): void {
     this.router.navigate(['/']);
   }
 
-  // Save annotation (replace with actual backend call)
   saveAnnotation(): void {
     console.log('Saving annotation:', {
       imageId: this.imageId,
@@ -53,4 +66,12 @@ export class EditImageComponent implements OnInit {
     this.annotationDescription = '';
     this.dangerLevel = 1;
   }
+
+  onImageLoad(event: Event) {
+    const img = event.target as HTMLImageElement;
+    this.displayedWidth = img.clientWidth;
+    this.displayedHeight = img.clientHeight;
+  }
+
 }
+
