@@ -16,6 +16,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
 import { ImageIdParserPipe } from './pipes/image-id-parser.pipe';
 import { EditImageComponent } from './components/edit-image/edit-image.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { EditImageComponent } from './components/edit-image/edit-image.component
     ImageCardComponent,
     ImageIdParserPipe,
     EditImageComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

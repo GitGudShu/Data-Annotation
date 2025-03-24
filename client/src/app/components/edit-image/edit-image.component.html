@@ -20,7 +20,6 @@
         [attr.height]="displayedHeight"
         [attr.viewBox]="'0 0 ' + imageWidth + ' ' + imageHeight"
       >
-
         <polygon
           *ngFor="let poly of polygons"
           [attr.points]="poly.points"
