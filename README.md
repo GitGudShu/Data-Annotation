@@ -1,25 +1,64 @@
 # Data-Annotation
-This project aims to develop a state-of-the-art web platform for visualizing preloaded images from an existing dataset, analyzing segmented objects (pedestrians, vehicles, urban infrastructure), and assigning priority levels based on their importance in urban driving (e.g., a crossing pedestrian is prioritized over a parked vehicle).
 
+This project aims to develop a state-of-the-art web platform for:
+- Visualizing preloaded images from an existing dataset
+- Analyzing segmented objects (pedestrians, vehicles, urban infrastructure)
+- Assigning priority levels based on their importance in urban driving  
+  (e.g., a crossing pedestrian is prioritized over a parked vehicle)
 
-Aller dans le dossier client :
+## Installation Instructions
+
+### 1. Install Dependencies
+
+#### Client
+```bash
+cd client
 npm install
+```
 
-aller dans le dossier serveur : 
-npm install 
+#### Server
+```bash
+cd server
+npm install
+```
 
-Créer un .env à la racine du dossier serveur : 
+### 2. Environment Configuration
+
+Create a `.env` file at the root of the `server` directory with the following content:
+
+```
 DB_NAME=annotation_appBDD
-DB_USER=‘user_mysl’
-DB_PASSWORD=‘mot_de_passe_mysql’
+DB_USER='user_mysl'
+DB_PASSWORD='mot_de_passe_mysql'
 DB_HOST=localhost
+```
 
-Lancez mysql dans un terminal lancé dans server/database :
+> ⚠️ Make sure to replace `'user_mysl'` and `'mot_de_passe_mysql'` with your actual MySQL credentials.
+
+### 3. Database Initialization
+
+Start MySQL from the `server/database` directory:
+
+```bash
 mysql -u root -p
+```
 
-Une fois connecté : SOURCE init.sql
+Once connected, run:
 
+```sql
+SOURCE init.sql;
+```
 
-Lancer le projet : 
-npm start dans le client
-npm run dev dans le server
+### 4. Run the Project
+
+#### Client
+```bash
+npm start
+```
+
+#### Server
+```bash
+npm run dev
+```
+
+Let me know if you'd like a full README template (with sections like Features, Technologies, etc.)!
