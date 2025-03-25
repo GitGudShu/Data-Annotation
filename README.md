@@ -53,7 +53,7 @@ SOURCE init.sql;
 
 #### Client
 ```bash
-npm start
+ng serve
 ```
 
 #### Server
