@@ -18,6 +18,13 @@ import { ImageIdParserPipe } from './pipes/image-id-parser.pipe';
 import { EditImageComponent } from './components/edit-image/edit-image.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
+// firebase
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+
+import { environment } from '../environments/environment';
+import { GoogleRegisterComponent } from './components/google-register/google-register.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +38,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     ImageIdParserPipe,
     EditImageComponent,
     UserProfileComponent,
+    GoogleRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +46,9 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
   ],
   providers: [],
   bootstrap: [AppComponent]

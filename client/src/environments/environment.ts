@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+  firebase: {
+    apiKey: "AIzaSyBahJxvmxniTF9rxhLHizsj9FaXs-efIeQ",
+    authDomain: "pr71---annotation.firebaseapp.com", 
+    projectId: "pr71---annotation",
+    storageBucket: "pr71---annotation.appspot.com",
+    messagingSenderId: "969816814714",
+    appId: "1:969816814714:web:fe3eb089dddb0d0b0e77c3",
+    measurementId: "G-Q5VZSG53E2"
+  },
   apiUrl: 'http://localhost:5000/api'
 };
 
