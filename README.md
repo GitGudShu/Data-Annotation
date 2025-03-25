@@ -60,5 +60,3 @@ ng serve
 ```bash
 npm run dev
 ```
-
-Let me know if you'd like a full README template (with sections like Features, Technologies, etc.)!
