@@ -85,8 +85,8 @@
 .welcome-message {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-left: 15px;
   margin-right: 2em;
+  text-transform: uppercase;
 }
 
 .spacer {
