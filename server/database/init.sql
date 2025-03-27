@@ -8,6 +8,7 @@ CREATE TABLE users (
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
+    avatar VARCHAR(255) DEFAULT NULL,
     password VARCHAR(150) NOT NULL,
     role ENUM('annotator', 'admin') DEFAULT 'annotator',
     createdAt DATETIME NOT NULL,

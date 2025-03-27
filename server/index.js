@@ -1,9 +1,17 @@
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const User = require('./models/user.model');
 const userRoutes = require('./routes/user');
 const sequelize = require('./db'); 
+
+const avatarsDir = path.join(__dirname, 'uploads/avatars');
+if (!fs.existsSync(avatarsDir)) {
+    fs.mkdirSync(avatarsDir, { recursive: true });
+}
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +30,7 @@ app.use('/api/annotations', annotationRoutes);
 app.use('/api/image-annotations', imageAnnotationsRoute);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/uploads/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
 
 // Root endpoint
 app.get('/', (req, res) => {

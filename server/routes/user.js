@@ -11,6 +11,7 @@ router.get('/me', authenticate, (req, res) => {
 		nom: user.nom,
 		prenom: user.prenom,
 		email: user.email,
+		avatar: user.avatar,
 		role: user.role
 	});
 });

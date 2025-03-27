@@ -137,3 +137,6 @@ dist
 
 # Ignore heavy data directory
 data/*
+
+# Ignore uploads directory
+uploads/

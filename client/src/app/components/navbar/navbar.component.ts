@@ -14,6 +14,13 @@ export class NavbarComponent {
 
 	constructor(private userStore: UserStoreService) {}
 
+
+	ngOnInit(): void {
+		this.user$.subscribe(user => {
+			console.log('User Store:', user);
+		});
+	}
+	
 	toggleMenu(): void {
 		this.isMenuOpen = !this.isMenuOpen;
 	}
