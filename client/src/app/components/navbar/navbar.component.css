@@ -92,15 +92,3 @@
 .spacer {
   flex: 1;
 }
-
-.nav-links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #ccc;
-  font-weight: 500;
-}
-
-.nav-links a.active-link {
-  color: #fff;
-  border-bottom: 2px solid #fff;
-}
