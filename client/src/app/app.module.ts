@@ -25,6 +25,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
 import { GoogleLoginComponent } from './components/google-login/google-login.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { GoogleLoginComponent } from './components/google-login/google-login.com
     UserProfileComponent,
     GoogleRegisterComponent,
     GoogleLoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

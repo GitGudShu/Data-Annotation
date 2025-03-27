@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { EditImageComponent } from './components/edit-image/edit-image.component';
 import { ImageListComponent } from './pages/imageList/imageList.component';
+import { HomeComponent } from './components/home/home.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
@@ -11,6 +12,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
+	{ path: '', component: HomeComponent },
 	{ path: 'imageList', component: ImageListComponent, canActivate: [AuthGuard] },
 	{ path: 'userProfile', component: UserProfileComponent, canActivate: [AuthGuard] },
 	{ path: 'dashboard', component: AdminPanelComponent, canActivate: [RoleGuard], data: { role: 'admin' } },
