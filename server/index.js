@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const User = require('./models/user.model');
+const userRoutes = require('./routes/user');
 const sequelize = require('./db'); 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/images', imageRoutes);
 app.use('/api/annotations', annotationRoutes);
 app.use('/api/image-annotations', imageAnnotationsRoute);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

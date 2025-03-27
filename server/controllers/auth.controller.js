@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 async function googleRegister(req, res) {
 	const { nom, prenom, email } = req.body;
@@ -32,6 +33,30 @@ async function googleRegister(req, res) {
 	}
 }
 
+async function loginWithGoogle(req, res) {
+	const { email } = req.body;
+
+	if (!email) {
+		return res.status(400).json({ message: 'Missing email' });
+	}
+
+	try {
+		const user = await User.findOne({ where: { email } });
+
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' });
+		}
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
+
+		res.json({ token });
+	} catch (err) {
+		console.error('Error in loginWithGoogle:', err);
+		res.status(500).json({ message: 'Internal server error' });
+	}
+}
+
 module.exports = {
 	googleRegister,
+	loginWithGoogle
 };

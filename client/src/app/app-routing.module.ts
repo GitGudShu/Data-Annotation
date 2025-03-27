@@ -6,7 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
-import { LoginComponent } from './components/login/login.component';
+import { GoogleLoginComponent } from './components/google-login/google-login.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'userProfile', component: UserProfileComponent},
   { path: 'edit/:city/:id', component: EditImageComponent },
   { path: 'register', component: GoogleRegisterComponent },
-  { path: 'login', component: LoginComponent }
+	{ path: 'login', component: GoogleLoginComponent },
 ];
 
 @NgModule({
