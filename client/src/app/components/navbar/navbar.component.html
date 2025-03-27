@@ -1,86 +1,106 @@
 <header class="bg-[#1e1e2f] text-white">
 	<div class="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
 
-		<!-- Logo -->
-		<div class="flex items-center gap-2">
-			<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
-					fill="#FF3366" fill-opacity="0.2" />
-				<path
-					d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
-					stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
-				<path d="M16.5 21L13.5 24L16.5 27" stroke="#FF3366" stroke-width="2" stroke-linecap="round"
-					stroke-linejoin="round" />
-			</svg>
-			<span class="font-bold text-xl tracking-wider">LABELSCAPE</span>
-		</div>
+		<!-- Partie gauche -->
+		<div class="flex items-center gap-10">
 
-		<!-- Navigation links si connecté -->
-		<nav *ngIf="user$ | async as user; else guest" class="hidden md:flex items-center space-x-6">
-			<a *ngIf="user.role === 'annotator' || user.role === 'admin'" routerLink="/" class="text-white/80 hover:text-white transition-colors">
-				Home
-			</a>
-			<a *ngIf="user.role === 'annotator' || user.role === 'admin'" routerLink="/userProfile" class="text-white/80 hover:text-white transition-colors">
-				Profile
-			</a>
-			<a *ngIf="user.role === 'admin'" routerLink="/dashboard" class="text-white/80 hover:text-white transition-colors">
-				Admin Dashboard
-			</a>
-		</nav>
-
-		<!-- User dropdown (protégé par l'observable user$) -->
-<div class="hidden md:block relative" *ngIf="user$ | async as user">
-	<div class="relative">
-		<button (click)="toggleMenu()" class="flex items-center space-x-1 relative h-8 rounded-full focus:outline-none">
-			<div class="h-8 w-8 rounded-full overflow-hidden">
-				<img
-				class="avatar"
-				src="https://gitgudshu.github.io/assets/images/profile.png"
-				alt="User Avatar"
-			/>			
+			<div class="flex items-center gap-2">
+				<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
+						fill="#FF3366" fill-opacity="0.2" />
+					<path
+						d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
+						stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
+					<path d="M16.5 21L13.5 24L16.5 27" stroke="#FF3366" stroke-width="2" stroke-linecap="round"
+						stroke-linejoin="round" />
+				</svg>
+				<span class="font-bold text-xl tracking-wider">LABELSCAPE</span>
 			</div>
-		</button>
 
-		<!-- Dropdown Menu -->
-		<div *ngIf="isMenuOpen"
-			class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-			<div class="py-1">
-				<div class="px-4 py-3">
-					<p class="text-sm font-medium">{{ user.prenom }} {{ user.nom }}</p>
-					<p class="text-xs text-gray-500 dark:text-gray-400">{{ user.email }}</p>
-				</div>
-				<div class="border-t border-gray-200 dark:border-gray-700"></div>
-				<a routerLink="/userProfile"
-					class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-					<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24"
-						stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-					</svg>
-					<span>Profil</span>
+			<nav *ngIf="user$ | async as user"
+				class="hidden md:flex items-center space-x-6 font-semibold">
+
+				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
+					routerLink="/"
+					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
+					Image List
 				</a>
-				<button (click)="handleLogout()"
-					class="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-					<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24"
-						stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-					</svg>
-					<span>Se déconnecter</span>
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
 
+				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
+					routerLink="/userProfile"
+					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
+					Profile
+				</a>
 
-		<!-- Navigation links si pas connecté -->
-		<ng-template #guest>
-			<nav class="hidden md:flex items-center space-x-6">
-				<a routerLink="/login" class="text-white/80 hover:text-white transition-colors">Login</a>
-				<a routerLink="/register" class="text-white/80 hover:text-white transition-colors">Register</a>
+				<a *ngIf="user.role === 'admin'"
+					routerLink="/dashboard"
+					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
+					Admin Dashboard
+				</a>
 			</nav>
-		</ng-template>
+		</div>
+
+		<!-- Partie droite -->
+		<div class="hidden md:block relative">
+			<ng-container *ngIf="user$ | async as user; else guest">
+				<!-- Dropdown si connecté -->
+				<div class="relative">
+					<button (click)="toggleMenu()" class="flex items-center space-x-1 h-8 rounded-full focus:outline-none">
+						<div class="h-8 w-8 rounded-full overflow-hidden">
+							<img
+								class="avatar"
+								src="https://gitgudshu.github.io/assets/images/profile.png"
+								alt="User Avatar"
+							/>
+						</div>
+					</button>
+
+					<!-- Menu déroulant -->
+					<div *ngIf="isMenuOpen"
+						class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+						<div class="py-1">
+							<div class="px-4 py-3">
+								<p class="text-sm font-medium">{{ user.prenom }} {{ user.nom }}</p>
+								<p class="text-xs text-gray-500 dark:text-gray-400">{{ user.email }}</p>
+							</div>
+							<div class="border-t border-gray-200 dark:border-gray-700"></div>
+							<a routerLink="/userProfile"
+								class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+								<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24"
+									stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+										d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+								</svg>
+								<span>Profil</span>
+							</a>
+							<button (click)="handleLogout()"
+								class="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+								<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24"
+									stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+										d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+								</svg>
+								<span>Se déconnecter</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+
+			<!-- Si non connecté -->
+			<ng-template #guest>
+				<nav class="flex items-center space-x-6 font-semibold">
+					<a routerLink="/login"
+						class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
+						Login
+					</a>
+					<a routerLink="/register"
+						class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
+						Register
+					</a>
+				</nav>
+			</ng-template>
+		</div>
 	</div>
 </header>
