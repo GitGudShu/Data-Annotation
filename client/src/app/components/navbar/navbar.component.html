@@ -22,15 +22,9 @@
 				class="hidden md:flex items-center space-x-6 font-semibold">
 
 				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
-					routerLink="/"
+					routerLink="/imageList"
 					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
 					Image List
-				</a>
-
-				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
-					routerLink="/userProfile"
-					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
-					Profile
 				</a>
 
 				<a *ngIf="user.role === 'admin'"

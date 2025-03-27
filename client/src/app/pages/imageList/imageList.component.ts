@@ -3,11 +3,11 @@ import { Image } from '../../classes/image';
 import { ImageService } from '../../services/image.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-imageList',
+  templateUrl: './imageList.component.html',
+  styleUrls: ['./imageList.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ImageListComponent implements OnInit {
   images: Image[] = [];
   selectedCity: string = 'frankfurt'; // Default city
 

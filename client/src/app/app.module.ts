@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
+import { ImageListComponent } from './pages/imageList/imageList.component';
 import { AnnotationComponent } from './pages/annotation/annotation.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AnnotationFormComponent } from './components/annotation-form/annotation-form.component';
@@ -29,7 +29,7 @@ import { GoogleLoginComponent } from './components/google-login/google-login.com
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    ImageListComponent,
     AnnotationComponent,
     AdminPanelComponent,
     AnnotationFormComponent,
