@@ -1,218 +1,45 @@
-<main class="flex-1 bg-white">
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Precise Polygon Criticality Annotation
-              </h1>
-              <p class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Enhance your machine learning models with our advanced image annotation platform. Classify polygon
-                criticality with ease and accuracy.
-              </p>
-            </div>
-            <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <a routerLink="/signup" class="inline-block">
-                <button class="inline-flex items-center justify-center gap-1 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#1e1e2f] hover:bg-[#2a2a3c] text-white h-11 px-8">
-                  Get Started
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </button>
-              </a>
-              <a routerLink="/demo" class="inline-block">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 px-8">
-                  View Demo
-                </button>
-              </a>
-            </div>
-            <div class="flex items-center gap-4 text-sm">
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Secure</span>
-              </div>
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Accurate</span>
-              </div>
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Fast</span>
-              </div>
-            </div>
-          </div>
-          <div class="mx-auto lg:mx-0 relative aspect-video overflow-hidden rounded-xl border bg-muted">
-            <img
-              src="assets/placeholder.svg"
-              alt="Annotation Interface Preview"
-              class="object-cover w-full h-full"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full py-12 md:py-24 lg:py-32 bg-muted">
-      <div class="container px-4 md:px-6">
-        <div class="flex flex-col items-center justify-center space-y-4 text-center">
-          <div class="space-y-2">
-            <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How It Works</h2>
-            <p class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Our platform makes polygon criticality annotation simple and efficient
-            </p>
-          </div>
-        </div>
-        <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-8">
-          <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-            <div class="p-6 flex flex-col items-center text-center space-y-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold">1. Sign Up</h3>
-              <p class="text-gray-500 dark:text-gray-400">
-                Create an account to access our annotation platform
-              </p>
-            </div>
-          </div>
-          <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-            <div class="p-6 flex flex-col items-center text-center space-y-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <img
-                  src="assets/placeholder.svg"
-                  alt="Annotation Icon"
-                  class="h-6 w-6 text-primary"
-                />
-              </div>
-              <h3 class="text-xl font-bold">2. Annotate</h3>
-              <p class="text-gray-500 dark:text-gray-400">
-                Classify polygon criticality on images with our intuitive interface
-              </p>
-            </div>
-          </div>
-          <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-            <div class="p-6 flex flex-col items-center text-center space-y-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <img
-                  src="assets/placeholder.svg"
-                  alt="Export Icon"
-                  class="h-6 w-6 text-primary"
-                />
-              </div>
-              <h3 class="text-xl font-bold">3. Export</h3>
-              <p class="text-gray-500 dark:text-gray-400">
-                Download your annotated data in various formats for your ML models
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="w-full py-12 md:py-24 lg:py-32">
-      <div class="container px-4 md:px-6">
-        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div class="mx-auto lg:mx-0 relative aspect-video overflow-hidden rounded-xl border bg-muted">
-            <img
-              src="assets/placeholder.svg"
-              alt="Annotation Interface Example"
-              class="object-cover w-full h-full"
-            />
-          </div>
-          <div class="flex flex-col justify-center space-y-4">
-            <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">Powerful Annotation Tools</h2>
-              <p class="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Our platform provides advanced tools for precise polygon criticality classification
-              </p>
-            </div>
-            <ul class="grid gap-2">
-              <li class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Multiple criticality levels for precise classification</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Intuitive polygon selection and editing tools</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Collaborative annotation with team management</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Quality control and verification workflows</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-primary">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                <span>Export annotations in multiple formats</span>
-              </li>
-            </ul>
-            <div>
-              <a routerLink="/signup" class="inline-block">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#1e1e2f] hover:bg-[#2a2a3c] text-white h-11 px-8">
-                  Start Annotating Today
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-white px-4 mt-10 text-center">
+  <main class="flex flex-col items-center justify-center max-w-3xl">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+      Prioritize Critical Objects for Safer Urban Driving
+    </h1>
+
+    <p class="text-lg md:text-xl text-gray-600 mb-8">
+      Annotate images effortlessly and enhance autonomous vehicle performance.
+    </p>
+
+    <!-- Utilisation d'une balise <a> avec un événement (click) pour déclencher redirectToNext() -->
+    <a (click)="redirectToNext()"
+       class="inline-flex items-center px-6 py-3 rounded-lg bg-[#1e1e2f] text-white font-medium transition-all duration-200 hover:bg-[#2a2a3d] hover:translate-y-[-2px] hover:shadow-md"
+       style="cursor: pointer;">
+      Get Started →
+    </a>
+
+    <div class="my-12">
+      <!-- Remplacement de <Image> par <img> -->
+      <img src="assets/imageIllu.png"
+           alt="CityScapes dataset visualization showing prioritized urban driving objects"
+           width="600" height="300"
+           class="rounded-lg shadow-md" />
+    </div>
   </main>
+
   <footer class="border-t py-6 md:py-8">
     <div class="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 text-center">
       <div class="flex items-center gap-2 font-bold">
         <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
-            fill="#FF3366"
-            fillOpacity="0.2"
-          />
-          <path
-            d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
-            stroke="#FF3366"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M16.5 21L13.5 24L16.5 27"
-            stroke="#FF3366"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <path d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
+                fill="#FF3366" fill-opacity="0.2" />
+          <path d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
+                stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
+          <path d="M16.5 21L13.5 24L16.5 27"
+                stroke="#FF3366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>LABELSCAPE</span>
       </div>
-      <p class="text-sm text-gray-500 dark:text-gray-400">© 2025 LABELSCAPE. All rights reserved.</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        © 2025 LABELSCAPE. All rights reserved.
+      </p>
     </div>
-  </footer>  
+  </footer>
+</div>
