@@ -6,7 +6,7 @@
 }
 
 .overlay-polygon {
-  fill: rgba(55, 59, 113, 0.771);
+  fill: rgba(234, 234, 234, 0.771);
   stroke: rgb(157, 157, 157);
   stroke-width: 2;
   transition: fill 0.2s ease-in-out;
@@ -15,5 +15,5 @@
 }
 
 .overlay-polygon:hover {
-  fill: rgba(0, 128, 255, 0.4);
+  fill: rgba(255, 255, 255, 0.4);
 }

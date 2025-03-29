@@ -32,7 +32,7 @@ export class EditImageComponent implements OnInit {
     this.imageId = this.activatedRoute.snapshot.paramMap.get('id') || '';
 
     this.imageUrl = `http://localhost:5000/api/images/${this.city}/${this.imageId}`;
-    this.annotationUrl = `http://localhost:5000/api/annotations/${this.city}/${this.imageId}`;
+    this.annotationUrl = `http://localhost:5000/api/annotations/${this.city}/${this.imageId}?source=active`;
 
     // Annotation json parsing here
     this.http.get<any>(this.annotationUrl).subscribe(annotation => {

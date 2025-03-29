@@ -20,7 +20,7 @@
             (load)="onImageLoad($event)"
           />
           <svg
-            *ngIf="displayedWidth && displayedHeight"
+            *ngIf="displayedWidth && displayedHeight && imageHeight && imageHeight"
             class="absolute inset-0 w-full h-full pointer-events-none overlay-svg"
             [attr.width]="displayedWidth"
             [attr.height]="displayedHeight"

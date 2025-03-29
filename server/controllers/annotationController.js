@@ -6,15 +6,43 @@ const activePath = path.join(configDir, '../active_sample.json');
 
 exports.getAnnotationByCityAndImage = (req, res) => {
   const { city, imageName } = req.params;
-  const annotationDir = path.join(__dirname, '../data/val_annotations/', city);
-  const jsonFile = `${annotationDir}/${imageName}_gtFine_polygons.json`;
+  const source = req.query.source || 'original'; // default to original
+  let jsonFile;
+
+  if (source === 'active') {
+    const activePath = path.join(__dirname, '../data/active_sample.json');
+
+    if (!fs.existsSync(activePath)) {
+      return res.status(400).json({ error: "No active sample set." });
+    }
+
+    const activeSample = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+    const safeName = activeSample.safeName;
+
+    if (!safeName) {
+      return res.status(400).json({ error: "Active sample is not properly configured." });
+    }
+
+    const sampleDir = path.join(__dirname, '../data/data_samples', safeName, city);
+    jsonFile = path.join(sampleDir, `${imageName}_gtFine_polygons.json`);
+  } else {
+    const annotationDir = path.join(__dirname, '../data/val_annotations/', city);
+    jsonFile = path.join(annotationDir, `${imageName}_gtFine_polygons.json`);
+  }
 
   if (!fs.existsSync(jsonFile)) {
     return res.status(404).json({ error: "Annotation not found", path: jsonFile });
   }
 
-  const annotationData = JSON.parse(fs.readFileSync(jsonFile, 'utf-8'));
-  res.json(annotationData);
+  try {
+    const annotationData = JSON.parse(fs.readFileSync(jsonFile, 'utf-8'));
+    console.log(`Loaded annotation for ${city}/${imageName} from ${source}`);
+    console.log(`Path -> ${jsonFile}`)
+    res.json(annotationData);
+  } catch (err) {
+    console.error('Error parsing annotation JSON:', err);
+    res.status(500).json({ error: "Failed to read annotation JSON." });
+  }
 };
 
 exports.getAllLabels = async (req, res) => {
