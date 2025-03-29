@@ -1,27 +1,42 @@
-<div class="min-h-screen bg-gray-100">
-
+<div class="min-h-screen bg-gray-50 text-gray-900">
   <main class="max-w-7xl mx-auto px-4 py-6">
-    <ng-container *ngIf="allClasses.length > 0; else loading">
-    <div class="class-toggle-panel">
-      <h3>Select Active Classes</h3>
-      <div class="classes-grid">
-        <button
-          *ngFor="let label of allClasses"
-          [class.active]="isActive(label)"
-          (click)="toggleClass(label)"
-        >
-          {{ label }}
-        </button>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold tracking-tight">Data Samples</h1>
+      <button
+        (click)="openCreateModal()"
+        class="bg-purple-600 text-white px-4 py-2 hover:bg-purple-700 transition"
+      >
+        + Create New Sample
+      </button>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        *ngFor="let sample of dataSamples"
+        class="bg-white p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      >
+        <div class="mb-2 flex justify-between items-center">
+          <h2 class="text-lg font-semibold truncate">{{ sample.name }}</h2>
+        </div>
+        <p class="text-sm text-gray-500 mb-2">
+          {{ sample.imageCount }} images | {{ sample.classes.length }} classes
+        </p>
+        <div class="flex flex-wrap gap-2 text-sm">
+          <span
+            *ngFor="let cls of sample.classes"
+            class="bg-purple-100 text-purple-800 px-2 py-1 rounded-md"
+          >
+            {{ cls }}
+          </span>
+        </div>
       </div>
     </div>
-  </ng-container>
 
-  <ng-template #loading>
-    <div class="loader bouncing-dots"></div>
-  </ng-template>
-
-  <button class="edit-btn" (click)="updateActiveClassOverlay()">
-    Edit Active Classes
-  </button>
+    <app-data-sample-modal
+      *ngIf="isCreateModalOpen"
+      [allClasses]="allClasses"
+      (close)="isCreateModalOpen = false"
+      (submit)="createDataSample($event)"
+    ></app-data-sample-modal>
   </main>
 </div>

@@ -47,4 +47,30 @@ export class AdminPanelComponent implements OnInit {
   isActive(label: string): boolean {
     return this.activeClasses.has(label);
   }
+
+  dataSamples: { name: string; classes: string[]; imageCount: number }[] = [];
+  isCreateModalOpen = false;
+
+  openCreateModal() {
+    this.isCreateModalOpen = true;
+  }
+
+  createDataSample(selectedClasses: string[]) {
+    this.isCreateModalOpen = false;
+
+    this.http.post('http://localhost:5000/api/samples/create', {
+      name: `Sample ${Date.now()}`,
+      classes: selectedClasses
+    }).subscribe({
+      next: (res: any) => {
+        this.dataSamples.push({
+          name: res.name,
+          imageCount: res.imageCount,
+          classes: selectedClasses
+        });
+      },
+      error: (err) => console.error('Error creating sample:', err)
+    });
+  }
+
 }

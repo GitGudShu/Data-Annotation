@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
 import { GoogleLoginComponent } from './components/google-login/google-login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { DataSampleModalComponent } from './components/data-sample-modal/data-sample-modal.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { HomeComponent } from './pages/home/home.component';
     GoogleRegisterComponent,
     GoogleLoginComponent,
     HomeComponent,
+    DataSampleModalComponent,
   ],
   imports: [
     BrowserModule,
