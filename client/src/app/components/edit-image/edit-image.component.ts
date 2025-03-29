@@ -15,13 +15,14 @@ export class EditImageComponent implements OnInit {
   annotationDescription: string = '';
   dangerLevel: number = 1;
 
-  polygons: { label: string, points: string }[] = [];
+  polygons: { label: string, points: string, hovered?: boolean, selected?: boolean, x?: number, y?: number }[] = [];
+  selectedGeometry: boolean = false;
+  selectedPolygonIndex: number | null = null;
+  tooltip: { x: number; y: number; label: string } | null = null;
   imageWidth!: number;
   imageHeight!: number;
   displayedWidth!: number;
   displayedHeight!: number;
-
-  selectedGeometry: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,6 +55,27 @@ export class EditImageComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/']);
   }
+
+  onPolygonClick(event: MouseEvent, index: number) {
+    const svg = (event.target as SVGPolygonElement).ownerSVGElement!;
+    const rect = svg.getBoundingClientRect();
+
+    const clickX = event.clientX - rect.left;
+    const clickY = event.clientY - rect.top;
+
+    if (this.selectedPolygonIndex === index) {
+      this.selectedPolygonIndex = null;
+      this.tooltip = null;
+    } else {
+      this.selectedPolygonIndex = index;
+      this.tooltip = {
+        x: clickX,
+        y: clickY,
+        label: this.polygons[index].label
+      };
+    }
+  }
+
 
   saveAnnotation(): void {
     console.log('Saving annotation:', {

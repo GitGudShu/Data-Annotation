@@ -27,12 +27,25 @@
             [attr.viewBox]="'0 0 ' + imageWidth + ' ' + imageHeight"
           >
             <polygon
-              *ngFor="let poly of polygons"
+              *ngFor="let poly of polygons; let i = index"
               [attr.points]="poly.points"
-              class="overlay-polygon"
+              class="cursor-pointer transition overlay-polygon"
               stroke-width="2"
+              [attr.stroke]="selectedPolygonIndex === i ? '#7c3aed' : '#000'"
+              [attr.fill]="selectedPolygonIndex === i ? 'rgba(124, 58, 237, 0.3)' : 'transparent'"
+              (click)="onPolygonClick($event, i)"
             ></polygon>
           </svg>
+
+          <div
+            *ngIf="tooltip"
+            class="absolute bg-white border border-purple-500 text-purple-700 text-xs font-medium px-2 py-1 rounded shadow z-10
+                  animate-fade-in-up transition-opacity duration-300 ease-out"
+            [style.left.px]="tooltip.x"
+            [style.top.px]="tooltip.y - 30"
+          >
+            {{ tooltip.label }}
+          </div>
         </div>
       </div>
 
