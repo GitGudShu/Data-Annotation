@@ -31,6 +31,7 @@ DB_NAME=annotation_appBDD
 DB_USER='user_mysl'
 DB_PASSWORD='mot_de_passe_mysql'
 DB_HOST=localhost
+JWT_SECRET=secretBilel
 ```
 
 > ⚠️ Make sure to replace `'user_mysl'` and `'mot_de_passe_mysql'` with your actual MySQL credentials.
