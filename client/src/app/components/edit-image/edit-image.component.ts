@@ -21,6 +21,8 @@ export class EditImageComponent implements OnInit {
   displayedWidth!: number;
   displayedHeight!: number;
 
+  selectedGeometry: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

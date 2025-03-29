@@ -4,6 +4,24 @@ const path = require('path');
 const configDir = path.join(__dirname, '../data/data_samples');
 const activePath = path.join(configDir, '../active_sample.json');
 
+
+/**
+ * Function to calculate the area of a polygon 
+ * using the shoelace formula.
+ * @param {*} polygon 
+ * @returns area of the polygon
+ */
+function calculatePolygonArea(polygon) {
+  let area = 0;
+  const n = polygon.length;
+  for (let i = 0; i < n; i++) {
+    const [x1, y1] = polygon[i];
+    const [x2, y2] = polygon[(i + 1) % n];
+    area += (x1 * y2 - x2 * y1);
+  }
+  return Math.abs(area / 2);
+}
+
 exports.getAnnotationByCityAndImage = (req, res) => {
   const { city, imageName } = req.params;
   const source = req.query.source || 'original'; // default to original
@@ -80,7 +98,7 @@ exports.getAllLabels = async (req, res) => {
 
 exports.createDataSample = (req, res) => {
   const { name, classes } = req.body;
-  console.log('📩 Received sample:', { name, classes });
+  console.log('Received sample:', { name, classes });
 
   if (!name || !Array.isArray(classes) || classes.length === 0) {
     return res.status(400).json({ error: "Missing or invalid name or classes." });
@@ -103,6 +121,10 @@ exports.createDataSample = (req, res) => {
     let imageCount = 0;
     let annotedCount = 0;
 
+    // list of classes to be filtered
+    const filteredClasses = ['car', 'cargroup', 'truck', 'bus']
+    const minArea = 5000; // Minimum area threshold for polygons <- CHANGE HERE TO YOUR LIKING ;)
+
     for (const city of cities) {
       const citySrc = path.join(annotationsRoot, city);
       const cityDst = path.join(outputDir, city);
@@ -115,8 +137,15 @@ exports.createDataSample = (req, res) => {
           const json = JSON.parse(raw);
 
           const filtered = Array.isArray(json.objects)
-            ? json.objects.filter(obj => classes.includes(obj.label))
-            : [];
+            ? json.objects.filter(obj => {
+                if (!classes.includes(obj.label)) return false;
+                if (filteredClasses.includes(obj.label)) {
+                  const area = calculatePolygonArea(obj.polygon || []);
+                  return area >= minArea;
+                }
+                return true;
+              })
+          : [];
 
           if (filtered.length === 0) continue;
 
