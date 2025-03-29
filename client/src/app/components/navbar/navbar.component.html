@@ -17,12 +17,12 @@
 				<span class="font-bold text-xl tracking-wider">LABELSCAPE</span>
 			</div>
 
-			<a routerLink="/" class="text-white/80 hover:text-white hover:underline underline-offset-4 font-semibold transition-colors">
-				Home
-			</a>
-
 			<nav *ngIf="user$ | async as user"
 				class="hidden md:flex items-center space-x-6 font-semibold">
+
+        <a routerLink="/" class="text-white/80 hover:text-white hover:underline underline-offset-4 font-semibold transition-colors">
+          Home
+        </a>
 
 				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
 					routerLink="/imageList"

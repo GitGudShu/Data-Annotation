@@ -1,51 +1,76 @@
-<div class="edit-image-container">
-  <button class="back-button" (click)="goBack()">← Back</button>
-
-  <div class="image-editor">
-    <!-- Image and Overlay -->
-    <div class="image-container" #imageContainer>
-      <img
-        *ngIf="imageUrl"
-        [src]="imageUrl"
-        alt="Selected Image"
-        class="full-image"
-        (load)="onImageLoad($event)"
-      />
-
-      <!-- overlay -->
-      <svg
-        *ngIf="displayedWidth && displayedHeight"
-        class="overlay-svg"
-        [attr.width]="displayedWidth"
-        [attr.height]="displayedHeight"
-        [attr.viewBox]="'0 0 ' + imageWidth + ' ' + imageHeight"
-      >
-        <polygon
-          *ngFor="let poly of polygons"
-          [attr.points]="poly.points"
-          class="overlay-polygon"
-          [attr.data-label]="poly.label"
-        ></polygon>
+<div class="flex flex-col min-h-screen bg-gray-50">
+  <!-- Back Button -->
+  <div class="p-4">
+    <button (click)="goBack()" class="text-sm text-purple-600 hover:underline flex items-center">
+      <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
       </svg>
+      Back
+    </button>
+  </div>
+
+  <main class="container mx-auto px-4 md:px-6 py-4 flex flex-col lg:flex-row gap-6 flex-1">
+    <div class="flex-1 border rounded-lg bg-white shadow-sm p-4">
+      <div class="relative aspect-video flex items-center justify-center overflow-hidden">
+        <div *ngIf="imageUrl" class="transition-transform">
+          <img
+            [src]="imageUrl"
+            alt="Selected Image"
+            class="max-w-full h-auto"
+            (load)="onImageLoad($event)"
+          />
+          <svg
+            *ngIf="displayedWidth && displayedHeight"
+            class="absolute inset-0 w-full h-full pointer-events-none overlay-svg"
+            [attr.width]="displayedWidth"
+            [attr.height]="displayedHeight"
+            [attr.viewBox]="'0 0 ' + imageWidth + ' ' + imageHeight"
+          >
+            <polygon
+              *ngFor="let poly of polygons"
+              [attr.points]="poly.points"
+              class="overlay-polygon"
+              stroke-width="2"
+            ></polygon>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex justify-between items-center mt-4">
+        <div class="flex gap-2">
+          <button class="px-4 py-1 text-sm border rounded hover:bg-gray-100">Next</button>
+        </div>
+      </div>
     </div>
 
     <!-- Annotation Panel -->
-    <div class="annotation-panel">
-      <h3>Annotations</h3>
+    <div class="w-full lg:w-80 bg-white rounded-lg shadow p-4 space-y-4">
+      <h3 class="text-lg font-semibold">Annotations</h3>
 
-      <p><strong>Image ID:</strong> {{ imageId }}</p>
-      <p><strong>City:</strong> {{ city }}</p>
+      <div class="text-sm space-y-1">
+        <div class="flex justify-between"><span class="text-gray-500">Image ID:</span><span>{{ imageId }}</span></div>
+        <div class="flex justify-between"><span class="text-gray-500">Folder:</span><span>{{ city }}</span></div>
+      </div>
 
-      <label for="description">Description:</label>
-      <textarea id="description" [(ngModel)]="annotationDescription" placeholder="Enter description..."></textarea>
+      <div>
+        <label class="text-sm block mb-1">Description</label>
+        <textarea [(ngModel)]="annotationDescription" rows="3" class="w-full border rounded px-2 py-1 text-sm" placeholder="Enter description..."></textarea>
+      </div>
 
-      <label for="danger-level">Danger Level:</label>
-      <input type="number" id="danger-level" min="1" max="5" [(ngModel)]="dangerLevel">
+      <div>
+        <label class="text-sm block mb-1">Danger Level</label>
+        <input type="number" min="1" max="5" [(ngModel)]="dangerLevel" class="w-full border rounded px-2 py-1 text-sm">
+      </div>
 
-      <div class="button-group">
-        <button class="save-button" (click)="saveAnnotation()">Save</button>
-        <button class="cancel-button" (click)="clearForm()">Clear</button>
+      <div class="flex gap-2 justify-between">
+        <button class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2 rounded" (click)="saveAnnotation()">
+          Save
+        </button>
+        <button class="bg-gray-200 hover:bg-gray-300 text-sm px-4 py-2 rounded" (click)="clearForm()">
+          Clear
+        </button>
       </div>
     </div>
-  </div>
+  </main>
 </div>
