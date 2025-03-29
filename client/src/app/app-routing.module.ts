@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { EditImageComponent } from './components/edit-image/edit-image.component';
-import { ImageListComponent } from './pages/imageList/imageList.component';
-import { HomeComponent } from './components/home/home.component';
+import { ImageListComponent } from './components/imageList/imageList.component';
+import { HomeComponent } from './pages/home/home.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';

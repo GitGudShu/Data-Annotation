@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdminPanelComponent implements OnInit {
   allClasses: string[] = [];
+  showClassSelector: boolean = false;
   activeClasses: Set<string> = new Set();
+  selectedClasses: string[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -37,6 +39,9 @@ export class AdminPanelComponent implements OnInit {
     } else {
       this.activeClasses.add(label);
     }
+  }
+
+  saveSelection(): void {
   }
 
   isActive(label: string): boolean {

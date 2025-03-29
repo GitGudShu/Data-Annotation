@@ -11,5 +11,29 @@
 
 <!-- Navbar -->
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
+
+<div class="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-white px-4 mt-10 text-center">
+
+  <router-outlet></router-outlet>
+
+  <footer class="border-t py-6 md:py-8">
+    <div class="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 text-center">
+      <div class="flex items-center gap-2 font-bold">
+        <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
+                fill="#FF3366" fill-opacity="0.2" />
+          <path d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
+                stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
+          <path d="M16.5 21L13.5 24L16.5 27"
+                stroke="#FF3366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>LABELSCAPE</span>
+      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        © 2025 LABELSCAPE. All rights reserved.
+      </p>
+    </div>
+
+  </footer>
+</div>
 

@@ -7,7 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ImageListComponent } from './pages/imageList/imageList.component';
+import { ImageListComponent } from './components/imageList/imageList.component';
 import { AnnotationComponent } from './pages/annotation/annotation.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AnnotationFormComponent } from './components/annotation-form/annotation-form.component';
@@ -25,7 +25,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { GoogleRegisterComponent } from './components/google-register/google-register.component';
 import { GoogleLoginComponent } from './components/google-login/google-login.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
