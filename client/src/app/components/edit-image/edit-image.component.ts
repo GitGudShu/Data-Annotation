@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { AnnotationService, PolygonViewModel } from '../../services/annotation.service';
 
 @Component({
   selector: 'app-edit-image',
@@ -11,7 +11,6 @@ export class EditImageComponent implements OnInit {
   imageId!: string;
   city!: string;
   imageUrl!: string;
-  annotationUrl!: string;
   annotationDescription: string = '';
   dangerLevel: number = 1;
 
@@ -23,46 +22,24 @@ export class EditImageComponent implements OnInit {
   displayedWidth!: number;
   displayedHeight!: number;
 
-  polygons: {
-    label: string;
-    points: string;
-    dangerLevel: number;
-    description: string;
-    hovered?: boolean;
-    selected?: boolean;
-    x?: number;
-    y?: number;
-  }[] = [];
+  polygons: PolygonViewModel[] = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private annotationService: AnnotationService
   ) {}
 
   ngOnInit(): void {
-    this.city = this.activatedRoute.snapshot.paramMap.get('city') || '';
-    this.imageId = this.activatedRoute.snapshot.paramMap.get('id') || '';
-
+    this.city = this.route.snapshot.paramMap.get('city') || '';
+    this.imageId = this.route.snapshot.paramMap.get('id') || '';
     this.imageUrl = `http://localhost:5000/api/images/${this.city}/${this.imageId}`;
-    this.annotationUrl = `http://localhost:5000/api/annotations/${this.city}/${this.imageId}?source=active`;
 
-    // Annotation json parsing here
-    this.http.get<any>(this.annotationUrl).subscribe(annotation => {
-      this.imageWidth = annotation.imgWidth;
-      this.imageHeight = annotation.imgHeight;
-      this.polygons = annotation.objects.map((obj: any) => ({
-        label: obj.label,
-        points: obj.polygon.map((p: number[]) => p.join(',')).join(' '),
-        dangerLevel: obj.priority || 1, // default aka priority very low
-        description: obj.description || '',
-      }));
-
+    this.annotationService.getAnnotation(this.city, this.imageId).subscribe(data => {
+      this.imageWidth = data.width;
+      this.imageHeight = data.height;
+      this.polygons = data.polygons;
     });
-
-    console.log('Edit image:', this.city, this.imageId);
-    console.log('Image URL:', this.imageUrl);
-    console.log('Annotation URL:', this.annotationUrl);
   }
 
   goBack(): void {
@@ -97,24 +74,17 @@ export class EditImageComponent implements OnInit {
       label: this.polygons[index].label
     };
 
-    this.annotationDescription = this.polygons[index].description || '';
-    this.dangerLevel = this.polygons[index].dangerLevel || 1;
+    this.annotationDescription = this.polygons[index].description;
+    this.dangerLevel = this.polygons[index].dangerLevel;
   }
 
-
-  /**
-   * This function is used to get the fill color of the polygon based on its danger level.
-   * @param poly Polygon object
-   * @param index Index of the polygon
-   * @returns The fill color as a string
-   */
-  getPolygonFill(poly: any): string {
+  getPolygonFill(poly: PolygonViewModel): string {
     switch (poly.dangerLevel) {
-      case 1: return 'rgba(34,197,94,0.3)';    // green
-      case 2: return 'rgba(132,204,22,0.3)';   // lime
-      case 3: return 'rgba(250,204,21,0.3)';   // yellow
-      case 4: return 'rgba(251,146,60,0.3)';   // orange
-      case 5: return 'rgba(239,68,68,0.3)';    // red
+      case 1: return 'rgba(34,197,94,0.3)';
+      case 2: return 'rgba(132,204,22,0.3)';
+      case 3: return 'rgba(250,204,21,0.3)';
+      case 4: return 'rgba(251,146,60,0.3)';
+      case 5: return 'rgba(239,68,68,0.3)';
       default: return 'rgba(234,234,234,0.77)';
     }
   }
@@ -132,23 +102,11 @@ export class EditImageComponent implements OnInit {
       this.polygons[this.selectedPolygonIndex].description = this.annotationDescription;
     }
 
-    const payload = {
-      annotations: this.polygons.map(poly => ({
-        label: poly.label,
-        polygon: poly.points.split(' ').map(pair => pair.split(',').map(Number)),
-        dangerLevel: poly.dangerLevel,
-        description: poly.description
-      }))
-    };
-
-    const url = `http://localhost:5000/api/annotations/save/${this.city}/${this.imageId}`;
-
-    this.http.post(url, payload).subscribe({
+    this.annotationService.saveAnnotation(this.city, this.imageId, this.polygons).subscribe({
       next: res => console.log('Annotations saved:', res),
       error: err => console.error('Save failed:', err)
     });
   }
-
 
   clearForm(): void {
     this.annotationDescription = '';
@@ -160,6 +118,4 @@ export class EditImageComponent implements OnInit {
     this.displayedWidth = img.clientWidth;
     this.displayedHeight = img.clientHeight;
   }
-
 }
-
