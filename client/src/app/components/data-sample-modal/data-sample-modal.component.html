@@ -3,15 +3,17 @@
     <h2 class="text-xl font-bold mb-4 text-gray-800">Create New Data Sample</h2>
 
     <div class="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto mb-6 pr-1">
-      <label *ngFor="let label of allClasses" class="flex items-center gap-2 text-gray-700">
-        <input
-          type="checkbox"
-          [value]="label"
-          (change)="onToggle(label)"
-          class="accent-purple-600"
-        />
-        <span>{{ label }}</span>
-      </label>
+      <button
+        *ngFor="let label of allClasses"
+        (click)="onToggle(label)"
+        [ngClass]="{
+          'bg-purple-600 text-white': selected.includes(label),
+          'bg-gray-100 text-gray-700': !selected.includes(label)
+        }"
+        class="px-4 py-2 rounded-full border border-gray-300 hover:bg-purple-100 transition-all duration-200 text-sm font-medium"
+      >
+        {{ label }}
+      </button>
     </div>
 
     <div class="flex justify-end gap-3">
