@@ -2,6 +2,13 @@
   <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-lg border border-gray-200">
     <h2 class="text-xl font-bold mb-4 text-gray-800">Create New Data Sample</h2>
 
+    <input
+      type="text"
+      [(ngModel)]="sampleName"
+      placeholder="Sample name"
+      class="w-full mb-4 px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+    />
+
     <div class="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto mb-6 pr-1">
       <button
         *ngFor="let label of allClasses"
@@ -24,8 +31,8 @@
         Cancel
       </button>
       <button
-        (click)="submit.emit(selected)"
-        [disabled]="selected.length === 0"
+        (click)="submitSample()"
+        [disabled]="selected.length === 0 || !sampleName.trim()"
         class="px-4 py-2 text-sm text-white bg-purple-600 rounded-md hover:bg-purple-700 disabled:opacity-50"
       >
         Create Sample

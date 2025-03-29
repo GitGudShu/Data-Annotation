@@ -12,10 +12,16 @@ export class AdminPanelComponent implements OnInit {
   activeClasses: Set<string> = new Set();
   selectedClasses: string[] = [];
 
+  dataSamples: { name: string; classes: string[]; imageCount: number }[] = [];
+  isLoadingSamples = true;
+  isCreateModalOpen = false;
+  annotedCount: number = 0;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchClasses();
+    this.fetchDataSamples();
   }
 
   fetchClasses(): void {
@@ -29,48 +35,41 @@ export class AdminPanelComponent implements OnInit {
       });
   }
 
-  updateActiveClassOverlay(): void {
-    console.log('Active classes:', this.activeClasses);
-  }
-
-  toggleClass(label: string): void {
-    if (this.activeClasses.has(label)) {
-      this.activeClasses.delete(label);
-    } else {
-      this.activeClasses.add(label);
-    }
-  }
-
-  saveSelection(): void {
-  }
-
-  isActive(label: string): boolean {
-    return this.activeClasses.has(label);
-  }
-
-  dataSamples: { name: string; classes: string[]; imageCount: number }[] = [];
-  isCreateModalOpen = false;
-
   openCreateModal() {
     this.isCreateModalOpen = true;
   }
 
-  createDataSample(selectedClasses: string[]) {
-    this.isCreateModalOpen = false;
+  createDataSample(data: { name: string; classes: string[] }): void {
+    const payload = {
+      name: data.name,
+      classes: data.classes
+    };
 
-    this.http.post('http://localhost:5000/api/samples/create', {
-      name: `Sample ${Date.now()}`,
-      classes: selectedClasses
-    }).subscribe({
-      next: (res: any) => {
-        this.dataSamples.push({
-          name: res.name,
-          imageCount: res.imageCount,
-          classes: selectedClasses
-        });
-      },
-      error: (err) => console.error('Error creating sample:', err)
-    });
+    this.http.post<{ name: string, classes: string[], imageCount: number }>('http://localhost:5000/api/annotations/data-sample', payload)
+      .subscribe({
+        next: res => {
+          this.dataSamples.push(res);
+          this.isCreateModalOpen = false;
+        },
+        error: err => console.error('Sample creation failed:', err)
+      });
   }
+
+
+  fetchDataSamples(): void {
+    this.isLoadingSamples = true;
+    this.http.get<{ samples: any[] }>('http://localhost:5000/api/annotations/data-samples')
+      .subscribe({
+        next: res => {
+          this.dataSamples = res.samples;
+          this.isLoadingSamples = false;
+        },
+        error: err => {
+          console.error('Failed to fetch data samples:', err);
+          this.isLoadingSamples = false;
+        }
+      });
+  }
+
 
 }

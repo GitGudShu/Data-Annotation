@@ -10,7 +10,21 @@
       </button>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <!-- Loading -->
+    <div *ngIf="isLoadingSamples" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 animate-pulse">
+      <div *ngFor="let n of [1,2,3,4,5,6]" class="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
+        <div class="h-4 bg-gray-300 rounded w-1/2 mb-3"></div>
+        <div class="h-3 bg-gray-200 rounded w-full mb-2"></div>
+        <div class="flex flex-wrap gap-2">
+          <div class="w-16 h-6 bg-gray-200 rounded-md"></div>
+          <div class="w-20 h-6 bg-gray-200 rounded-md"></div>
+          <div class="w-12 h-6 bg-gray-200 rounded-md"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loaded -->
+    <div *ngIf="!isLoadingSamples" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <div
         *ngFor="let sample of dataSamples"
         class="bg-white p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
@@ -19,7 +33,7 @@
           <h2 class="text-lg font-semibold truncate">{{ sample.name }}</h2>
         </div>
         <p class="text-sm text-gray-500 mb-2">
-          {{ sample.imageCount }} images | {{ sample.classes.length }} classes
+          {{ annotedCount }} annotated over {{ sample.imageCount }} images
         </p>
         <div class="flex flex-wrap gap-2 text-sm">
           <span

@@ -8,9 +8,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class DataSampleModalComponent {
   @Input() allClasses: string[] = [];
   @Output() close = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<string[]>();
+  @Output() submit = new EventEmitter<{ name: string; classes: string[] }>();
 
   selected: string[] = [];
+  sampleName: string = '';
 
   onToggle(label: string) {
     if (this.selected.includes(label)) {
@@ -18,5 +19,9 @@ export class DataSampleModalComponent {
     } else {
       this.selected.push(label);
     }
+  }
+
+  submitSample() {
+    this.submit.emit({ name: this.sampleName.trim(), classes: this.selected });
   }
 }
