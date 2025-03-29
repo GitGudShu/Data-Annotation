@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+const configDir = path.join(__dirname, '../data/data_samples');
+const activePath = path.join(configDir, '../active_sample.json');
+
 exports.getAnnotationByCityAndImage = (req, res) => {
   const { city, imageName } = req.params;
   const annotationDir = path.join(__dirname, '../data/val_annotations/', city);
@@ -94,8 +97,6 @@ exports.createDataSample = (req, res) => {
 
           const result = { ...json, objects: filtered };
           fs.writeFileSync(path.join(cityDst, file), JSON.stringify(result, null, 2));
-          annotedCount++;
-
         } catch (fileErr) {
           console.error(`❌ Error with file ${filePath}:`, fileErr.message);
         }
@@ -112,29 +113,30 @@ exports.createDataSample = (req, res) => {
     };
 
     fs.writeFileSync(configFilePath, JSON.stringify(sampleMeta, null, 2));
-    console.log(`🎉 Saved sample config: ${name} (${annotedCount}/${imageCount} images)`);
+    console.log(`Saved sample config: ${name} (${annotedCount}/${imageCount} images)`);
 
     res.json({
       name: sampleMeta.name,
+      safeName: sampleMeta.safeName,
       classes: sampleMeta.classes,
       imageCount: sampleMeta.imageCount,
       annotedCount: sampleMeta.annotedCount
     });
 
   } catch (err) {
-    console.error('🔥 Unexpected error during sample creation:', err);
+    console.error('Unexpected error during sample creation:', err);
     res.status(500).json({ error: 'Internal server error during sample creation.' });
   }
 };
 
 exports.getDataSamples = (req, res) => {
-  const configDir = path.join(__dirname, '../data/data_samples');
   const samples = fs.readdirSync(configDir)
     .filter(f => f.endsWith('.json'))
     .map(file => {
       const content = JSON.parse(fs.readFileSync(path.join(configDir, file), 'utf-8'));
       return {
         name: content.name,
+        safeName: content.safeName,
         classes: content.classes,
         imageCount: content.imageCount || 0,
         annotedCount: content.annotedCount || 0
@@ -143,3 +145,57 @@ exports.getDataSamples = (req, res) => {
 
   res.json({ samples });
 };
+
+exports.setActiveSample = (req, res) => {
+    const { safeName } = req.body;
+    console.log('Request to set active sample:', safeName);
+  
+    if (!safeName) {
+      console.warn("Missing 'safeName' in request body");
+      return res.status(400).json({ error: "safeName is required." });
+    }
+  
+    if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true });
+      console.log('Created configDir at', configDir);
+    }
+  
+    const samplePath = path.join(configDir, `${safeName}.json`);
+    if (!fs.existsSync(samplePath)) {
+      console.error(`Sample config not found: ${samplePath}`);
+      return res.status(404).json({ error: "Sample not found." });
+    }
+  
+    const activeData = {
+      safeName,
+      activatedAt: new Date().toISOString()
+    };
+  
+    try {
+      fs.writeFileSync(activePath, JSON.stringify(activeData, null, 2));
+      console.log(`Active sample set to "${safeName}" → saved to ${activePath}`);
+      res.json({ message: "Active sample set.", ...activeData });
+    } catch (err) {
+      console.error("Failed to write active sample:", err);
+      res.status(500).json({ error: "Failed to set active sample." });
+    }
+  };
+  
+  exports.getActiveSample = (req, res) => {
+    console.log("🔍 Fetching active sample...");
+    try {
+      if (!fs.existsSync(activePath)) {
+        const defaultActive = { safeName: null, activatedAt: null };
+        fs.writeFileSync(activePath, JSON.stringify(defaultActive, null, 2));
+        console.log("No active sample found. Created default:", defaultActive);
+        return res.json(defaultActive);
+      }
+  
+      const data = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+      console.log("Active sample loaded:", data);
+      res.json(data);
+    } catch (err) {
+      console.error("Error reading active sample:", err);
+      res.status(500).json({ error: "Failed to read active sample." });
+    }
+  };

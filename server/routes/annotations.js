@@ -4,12 +4,17 @@ const {
   getAnnotationByCityAndImage,
   getAllLabels,
   createDataSample,
-  getDataSamples
+  getDataSamples,
+  setActiveSample,
+  getActiveSample
 } = require('../controllers/annotationController');
 
-router.get('/:city/:imageName', getAnnotationByCityAndImage);
 router.get('/all-labels', getAllLabels);
-router.post('/data-sample', createDataSample);
 router.get('/data-samples', getDataSamples);
+router.get('/data-samples/active-sample', getActiveSample);
+router.post('/data-sample', createDataSample);
+router.post('/data-samples/active-sample', setActiveSample);
+
+router.get('/:city/:imageName', getAnnotationByCityAndImage);
 
 module.exports = router;

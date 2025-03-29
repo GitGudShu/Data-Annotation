@@ -27,14 +27,28 @@
     <div *ngIf="!isLoadingSamples" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <div
         *ngFor="let sample of dataSamples"
-        class="bg-white p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+        (click)="setActiveSample(sample)"
+        [ngClass]="{
+          'border-purple-600 ring-2 bg-purple-50 shadow-md': sample.safeName === activeSampleName
+        }"
+        class="relative cursor-pointer bg-white p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
       >
+        <!-- Active Badge -->
+        <div
+          *ngIf="sample.safeName === activeSampleName"
+          class="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded-full shadow"
+        >
+          ✓ Active
+        </div>
+
         <div class="mb-2 flex justify-between items-center">
           <h2 class="text-lg font-semibold truncate">{{ sample.name }}</h2>
         </div>
+
         <p class="text-sm text-gray-500 mb-2">
-          {{ annotedCount }} annotated over {{ sample.imageCount }} images
+          {{ sample.annotedCount }} annotated over {{ sample.imageCount }} images
         </p>
+
         <div class="flex flex-wrap gap-2 text-sm">
           <span
             *ngFor="let cls of sample.classes"
