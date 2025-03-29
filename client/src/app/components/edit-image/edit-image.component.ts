@@ -15,7 +15,6 @@ export class EditImageComponent implements OnInit {
   annotationDescription: string = '';
   dangerLevel: number = 1;
 
-  polygons: { label: string, points: string, hovered?: boolean, selected?: boolean, x?: number, y?: number }[] = [];
   selectedGeometry: boolean = false;
   selectedPolygonIndex: number | null = null;
   tooltip: { x: number; y: number; label: string } | null = null;
@@ -23,6 +22,17 @@ export class EditImageComponent implements OnInit {
   imageHeight!: number;
   displayedWidth!: number;
   displayedHeight!: number;
+
+  polygons: {
+    label: string;
+    points: string;
+    dangerLevel: number;
+    description: string;
+    hovered?: boolean;
+    selected?: boolean;
+    x?: number;
+    y?: number;
+  }[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,8 +53,11 @@ export class EditImageComponent implements OnInit {
       this.imageHeight = annotation.imgHeight;
       this.polygons = annotation.objects.map((obj: any) => ({
         label: obj.label,
-        points: obj.polygon.map((p: number[]) => p.join(',')).join(' ')
+        points: obj.polygon.map((p: number[]) => p.join(',')).join(' '),
+        dangerLevel: 1, // default aka priority very low
+        description: ''
       }));
+
     });
 
     console.log('Edit image:', this.city, this.imageId);
@@ -59,32 +72,70 @@ export class EditImageComponent implements OnInit {
   onPolygonClick(event: MouseEvent, index: number) {
     const svg = (event.target as SVGPolygonElement).ownerSVGElement!;
     const rect = svg.getBoundingClientRect();
-
     const clickX = event.clientX - rect.left;
     const clickY = event.clientY - rect.top;
 
+    if (this.selectedPolygonIndex !== null) {
+      this.polygons[this.selectedPolygonIndex].dangerLevel = this.dangerLevel;
+      this.polygons[this.selectedPolygonIndex].description = this.annotationDescription;
+    }
+
     if (this.selectedPolygonIndex === index) {
       this.selectedPolygonIndex = null;
+      this.selectedGeometry = false;
       this.tooltip = null;
-    } else {
-      this.selectedPolygonIndex = index;
-      this.tooltip = {
-        x: clickX,
-        y: clickY,
-        label: this.polygons[index].label
-      };
+      this.annotationDescription = '';
+      this.dangerLevel = 1;
+      return;
+    }
+
+    this.selectedPolygonIndex = index;
+    this.selectedGeometry = true;
+    this.tooltip = {
+      x: clickX,
+      y: clickY,
+      label: this.polygons[index].label
+    };
+
+    this.annotationDescription = this.polygons[index].description || '';
+    this.dangerLevel = this.polygons[index].dangerLevel || 1;
+  }
+
+
+  /**
+   * This function is used to get the fill color of the polygon based on its danger level.
+   * @param poly Polygon object
+   * @param index Index of the polygon
+   * @returns The fill color as a string
+   */
+  getPolygonFill(poly: any): string {
+    switch (poly.dangerLevel) {
+      case 1: return 'rgba(34,197,94,0.3)';    // green
+      case 2: return 'rgba(132,204,22,0.3)';   // lime
+      case 3: return 'rgba(250,204,21,0.3)';   // yellow
+      case 4: return 'rgba(251,146,60,0.3)';   // orange
+      case 5: return 'rgba(239,68,68,0.3)';    // red
+      default: return 'rgba(234,234,234,0.77)';
     }
   }
 
+  updateSelectedDangerLevel(level: number): void {
+    this.dangerLevel = level;
+    if (this.selectedPolygonIndex !== null) {
+      this.polygons[this.selectedPolygonIndex].dangerLevel = level;
+    }
+  }
 
   saveAnnotation(): void {
-    console.log('Saving annotation:', {
-      imageId: this.imageId,
-      city: this.city,
-      description: this.annotationDescription,
-      dangerLevel: this.dangerLevel
-    });
+    if (this.selectedPolygonIndex === null) return;
+
+    const selectedPolygon = this.polygons[this.selectedPolygonIndex];
+    selectedPolygon.dangerLevel = this.dangerLevel;
+    selectedPolygon.description = this.annotationDescription;
+
+    console.log('Annotation saved for polygon:', selectedPolygon);
   }
+
 
   clearForm(): void {
     this.annotationDescription = '';

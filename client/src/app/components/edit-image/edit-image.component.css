@@ -2,18 +2,12 @@
   position: absolute;
   top: 0;
   left: 0;
-  pointer-events: none; /* Prevent blocking the image */
+  pointer-events: none;
 }
 
 .overlay-polygon {
-  fill: rgba(234, 234, 234, 0.771);
-  stroke: rgb(157, 157, 157);
   stroke-width: 2;
   transition: fill 0.2s ease-in-out;
-  pointer-events: auto; /* Enable interaction */
+  pointer-events: auto;
   cursor: pointer;
-}
-
-.overlay-polygon:hover {
-  fill: rgba(255, 255, 255, 0.4);
 }

@@ -29,10 +29,10 @@
             <polygon
               *ngFor="let poly of polygons; let i = index"
               [attr.points]="poly.points"
-              class="cursor-pointer transition overlay-polygon"
-              stroke-width="2"
-              [attr.stroke]="selectedPolygonIndex === i ? '#7c3aed' : '#000'"
-              [attr.fill]="selectedPolygonIndex === i ? 'rgba(124, 58, 237, 0.3)' : 'transparent'"
+              class="overlay-polygon"
+              [attr.stroke]="selectedPolygonIndex === i ? '#6366f1' : '#fff'"
+              [attr.stroke-width]="selectedPolygonIndex === i ? 3 : 2"
+              [attr.fill]="getPolygonFill(poly)"
               (click)="onPolygonClick($event, i)"
             ></polygon>
           </svg>
@@ -81,6 +81,7 @@
                 name="danger"
                 [value]="1"
                 [(ngModel)]="dangerLevel"
+                (change)="updateSelectedDangerLevel(1)"
                 class="form-radio text-green-500 focus:ring-green-500"
               />
               <span class="flex items-center">
@@ -96,6 +97,7 @@
                 name="danger"
                 [value]="2"
                 [(ngModel)]="dangerLevel"
+                (change)="updateSelectedDangerLevel(2)"
                 class="form-radio text-lime-500 focus:ring-lime-500"
               />
               <span class="flex items-center">
@@ -111,6 +113,7 @@
                 name="danger"
                 [value]="3"
                 [(ngModel)]="dangerLevel"
+                (change)="updateSelectedDangerLevel(3)"
                 class="form-radio text-yellow-500 focus:ring-yellow-500"
               />
               <span class="flex items-center">
@@ -126,6 +129,7 @@
                 name="danger"
                 [value]="4"
                 [(ngModel)]="dangerLevel"
+                (change)="updateSelectedDangerLevel(4)"
                 class="form-radio text-orange-500 focus:ring-orange-500"
               />
               <span class="flex items-center">
@@ -141,6 +145,7 @@
                 name="danger"
                 [value]="5"
                 [(ngModel)]="dangerLevel"
+                (change)="updateSelectedDangerLevel(5)"
                 class="form-radio text-red-600 focus:ring-red-600"
               />
               <span class="flex items-center">
