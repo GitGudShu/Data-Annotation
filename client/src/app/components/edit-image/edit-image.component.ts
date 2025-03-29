@@ -54,8 +54,8 @@ export class EditImageComponent implements OnInit {
       this.polygons = annotation.objects.map((obj: any) => ({
         label: obj.label,
         points: obj.polygon.map((p: number[]) => p.join(',')).join(' '),
-        dangerLevel: 1, // default aka priority very low
-        description: ''
+        dangerLevel: obj.priority || 1, // default aka priority very low
+        description: obj.description || '',
       }));
 
     });
