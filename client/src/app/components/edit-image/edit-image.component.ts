@@ -127,13 +127,26 @@ export class EditImageComponent implements OnInit {
   }
 
   saveAnnotation(): void {
-    if (this.selectedPolygonIndex === null) return;
+    if (this.selectedPolygonIndex !== null) {
+      this.polygons[this.selectedPolygonIndex].dangerLevel = this.dangerLevel;
+      this.polygons[this.selectedPolygonIndex].description = this.annotationDescription;
+    }
 
-    const selectedPolygon = this.polygons[this.selectedPolygonIndex];
-    selectedPolygon.dangerLevel = this.dangerLevel;
-    selectedPolygon.description = this.annotationDescription;
+    const payload = {
+      annotations: this.polygons.map(poly => ({
+        label: poly.label,
+        polygon: poly.points.split(' ').map(pair => pair.split(',').map(Number)),
+        dangerLevel: poly.dangerLevel,
+        description: poly.description
+      }))
+    };
 
-    console.log('Annotation saved for polygon:', selectedPolygon);
+    const url = `http://localhost:5000/api/annotations/save/${this.city}/${this.imageId}`;
+
+    this.http.post(url, payload).subscribe({
+      next: res => console.log('Annotations saved:', res),
+      error: err => console.error('Save failed:', err)
+    });
   }
 
 

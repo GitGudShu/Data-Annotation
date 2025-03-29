@@ -63,6 +63,65 @@ exports.getAnnotationByCityAndImage = (req, res) => {
   }
 };
 
+exports.saveAnnotationForImage = (req, res) => {
+  const { city, imageName } = req.params;
+  const annotations = req.body.annotations;
+
+  const activePath = path.join(__dirname, '../data/active_sample.json');
+  if (!fs.existsSync(activePath)) {
+    return res.status(400).json({ error: "No active sample set." });
+  }
+
+  const activeSample = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+  const safeName = activeSample.safeName;
+
+  if (!safeName) {
+    return res.status(400).json({ error: "Active sample is not properly configured." });
+  }
+
+  const sampleDir = path.join(__dirname, '../data/data_samples', safeName, city);
+  const jsonFile = path.join(sampleDir, `${imageName}_gtFine_polygons.json`);
+
+  if (!fs.existsSync(jsonFile)) {
+    return res.status(404).json({ error: "Annotation file not found." });
+  }
+
+  try {
+    const existingData = JSON.parse(fs.readFileSync(jsonFile, 'utf-8'));
+    console.log(`Saving annotation for ${city}/${imageName} to active sample "${safeName}"`);
+    console.log(`Path -> ${jsonFile}`)
+
+    const updatedObjects = existingData.objects.map((obj) => {
+      const match = annotations.find(ann =>
+        ann.label === obj.label &&
+        JSON.stringify(ann.polygon) === JSON.stringify(obj.polygon)
+      );
+
+      if (match) {
+        console.log("===========================");
+        console.log(`Updating object: ${obj.label} with polygon: ${JSON.stringify(obj.polygon)}`);
+        console.log(`New priority: ${match.dangerLevel}`);
+        console.log(`New description: ${match.description}`);
+        return {
+          ...obj,
+          priority: match.dangerLevel,
+          description: match.description
+        };
+      }
+      return obj;
+    });
+
+    existingData.objects = updatedObjects;
+
+    fs.writeFileSync(jsonFile, JSON.stringify(existingData, null, 2), 'utf-8');
+    res.json({ message: "Annotation saved successfully." });
+  } catch (err) {
+    console.error("Error saving annotation:", err);
+    res.status(500).json({ error: "Failed to save annotation." });
+  }
+};
+
+
 exports.getAllLabels = async (req, res) => {
   const annotationsRoot = path.join(__dirname, '../data/val_annotations');
   let labelSet = new Set();
