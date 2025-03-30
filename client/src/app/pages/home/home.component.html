@@ -8,7 +8,7 @@
       Annotate images effortlessly and enhance autonomous vehicle performance.
     </p>
 
-    <a (click)="redirectToNext()"
+    <a (click)="claimRandomAndRedirect()"
         class="inline-flex items-center px-6 py-3 rounded-lg bg-[#1e1e2f] text-white font-medium transition-all duration-200 hover:bg-[#2a2a3d] hover:translate-y-[-2px] hover:shadow-md"
         style="cursor: pointer;">
       Get Started →
@@ -20,6 +20,22 @@
             width="600" height="300"
             class="rounded-lg shadow-md" />
     </div>
+
+    <!-- That's the loading overlay, the button go through all the data to pick from the unclaimed so it can take a moment :) -->
+    <div *ngIf="claimRandomImageIsLoading" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+      <div class="bg-white px-6 py-4 rounded-xl shadow-xl text-center space-y-2 max-w-sm w-full">
+        <div class="flex items-center justify-center space-x-2">
+          <svg class="animate-spin h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
+          </svg>
+          <span class="text-gray-700 font-medium">Loading...</span>
+        </div>
+        <p class="text-sm text-gray-500">Fetching unclaimed segmented image<br>in the active data sample...</p>
+      </div>
+    </div>
+
   </main>
 
   <footer class="border-t py-6 md:py-8">
