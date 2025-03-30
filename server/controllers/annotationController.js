@@ -1,3 +1,4 @@
+const { time } = require('console');
 const fs = require('fs');
 const path = require('path');
 
@@ -120,7 +121,6 @@ exports.saveAnnotationForImage = (req, res) => {
     res.status(500).json({ error: "Failed to save annotation." });
   }
 };
-
 
 exports.getAllLabels = async (req, res) => {
   const annotationsRoot = path.join(__dirname, '../data/val_annotations');
@@ -297,21 +297,71 @@ exports.setActiveSample = (req, res) => {
     }
   };
   
-  exports.getActiveSample = (req, res) => {
-    console.log("🔍 Fetching active sample...");
-    try {
-      if (!fs.existsSync(activePath)) {
-        const defaultActive = { safeName: null, activatedAt: null };
-        fs.writeFileSync(activePath, JSON.stringify(defaultActive, null, 2));
-        console.log("No active sample found. Created default:", defaultActive);
-        return res.json(defaultActive);
-      }
-  
-      const data = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
-      console.log("Active sample loaded:", data);
-      res.json(data);
-    } catch (err) {
-      console.error("Error reading active sample:", err);
-      res.status(500).json({ error: "Failed to read active sample." });
+exports.getActiveSample = (req, res) => {
+  console.log("🔍 Fetching active sample...");
+  try {
+    if (!fs.existsSync(activePath)) {
+      const defaultActive = { safeName: null, activatedAt: null };
+      fs.writeFileSync(activePath, JSON.stringify(defaultActive, null, 2));
+      console.log("No active sample found. Created default:", defaultActive);
+      return res.json(defaultActive);
     }
-  };
+
+    const data = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+    console.log("Active sample loaded:", data);
+    res.json(data);
+  } catch (err) {
+    console.error("Error reading active sample:", err);
+    res.status(500).json({ error: "Failed to read active sample." });
+  }
+};
+
+exports.claimRandomImage = (req, res) => {
+  const { userId } = req.body;
+  console.log('Claiming random image for user:', userId);
+
+  const activePath = path.join(__dirname, '../data/active_sample.json');
+  if (!fs.existsSync(activePath)) {
+    return res.status(400).json({ error: 'No active sample set.' });
+  }
+
+  const activeSample = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+  const sampleDir = path.join(__dirname, '../data/data_samples', activeSample.safeName);
+
+  const cities = fs.readdirSync(sampleDir).filter(city => {
+    const cityPath = path.join(sampleDir, city);
+    return fs.statSync(cityPath).isDirectory();
+  });
+
+  let availableImages = [];
+
+  timestamp = new Date().toISOString();
+  console.log("Checking for unclaimed images in active sample...");
+  for (const city of cities) {
+    const cityPath = path.join(sampleDir, city);
+    const files = fs.readdirSync(cityPath).filter(f => f.endsWith('.json'));
+
+    for (const file of files) {
+      const filePath = path.join(cityPath, file);
+      const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      if (!json.author) {
+        const imageId = file.replace('_gtFine_polygons.json', '');
+        availableImages.push({ city, imageId, path: filePath });
+      }
+    }
+  }
+  console.log(`Done in ${new Date() - timestamp}ms`);
+
+  if (availableImages.length === 0) {
+    return res.status(404).json({ error: 'No unclaimed images available in active sample.' });
+  }
+
+  const selected = availableImages[Math.floor(Math.random() * availableImages.length)];
+  const annotation = JSON.parse(fs.readFileSync(selected.path, 'utf-8'));
+  annotation.author = userId;
+  console.log(`Claimed image ${selected.imageId} for user ${userId}`);
+  fs.writeFileSync(selected.path, JSON.stringify(annotation, null, 2));
+
+  res.json({ city: selected.city, imageId: selected.imageId });
+};
+
