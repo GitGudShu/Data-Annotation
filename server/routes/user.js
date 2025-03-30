@@ -12,7 +12,8 @@ router.get('/me', authenticate, (req, res) => {
 		prenom: user.prenom,
 		email: user.email,
 		avatar: user.avatar,
-		role: user.role
+		role: user.role,
+		isGoogleUser: user.isGoogleUser
 	});
 });
 

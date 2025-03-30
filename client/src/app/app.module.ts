@@ -27,6 +27,8 @@ import { GoogleRegisterComponent } from './components/google-register/google-reg
 import { GoogleLoginComponent } from './components/google-login/google-login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DataSampleModalComponent } from './components/data-sample-modal/data-sample-modal.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { ChangePasswordProfileComponent } from './pages/change-password-profile/change-password-profile.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { DataSampleModalComponent } from './components/data-sample-modal/data-sa
     GoogleLoginComponent,
     HomeComponent,
     DataSampleModalComponent,
+    EditProfileComponent,
+    ChangePasswordProfileComponent,
   ],
   imports: [
     BrowserModule,

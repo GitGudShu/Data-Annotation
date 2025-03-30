@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HostListener, ElementRef } from '@angular/core';
 import { UserStoreService } from '../../services/user-store.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class NavbarComponent {
 	toggleDropdown = false;
 	isMenuOpen = false;
 
-	constructor(private userStore: UserStoreService) {}
+	constructor(
+		private userStore: UserStoreService,
+		private eRef: ElementRef
+	) {}
 
 
 	ngOnInit(): void {
@@ -30,4 +34,16 @@ export class NavbarComponent {
 		this.userStore.clear();
 		location.reload();
 	}
+
+	@HostListener('document:click', ['$event'])
+	onDocumentClick(event: Event): void {
+		if (!this.eRef.nativeElement.contains(event.target)) {
+			this.isMenuOpen = false;
+		}
+	}
+
+	handleDropdownOption(): void {
+		this.isMenuOpen = false;
+	}
+
 }

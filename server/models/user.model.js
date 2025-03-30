@@ -26,6 +26,15 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.ENUM('annotator', 'admin'),
     defaultValue: 'annotator'
+  },
+  isGoogleUser: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return this.password === 'GOOGLE_AUTH';
+    },
+    set(value) {
+      throw new Error('Do not try to set the "isGoogleUser" value!');
+    }
   }
 });
 

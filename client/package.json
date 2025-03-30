@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@tailwindcss/postcss": "^4.0.17",
     "client": "file:",
     "firebase": "^9.6.10",
     "rxfire": "^6.1.0",
