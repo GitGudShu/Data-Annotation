@@ -51,7 +51,7 @@ export class EditProfileComponent implements OnInit {
     const email = (<HTMLInputElement>document.getElementById('email')).value;
 
     formData.append('nom', nom);
-    formData.append('firstName', prenom);
+    formData.append('prenom', prenom);
     formData.append('email', email);
 
     const fileInput = (<HTMLInputElement>document.getElementById('avatar'));
