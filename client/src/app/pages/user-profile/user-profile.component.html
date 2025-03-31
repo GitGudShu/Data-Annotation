@@ -1,281 +1,209 @@
 <div class="max-w-5xl mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Profile</h1>
+  <h1 class="text-3xl font-bold mb-8">Profile</h1>
 
-    <div *ngIf="successAlert" class="bg-green-50 text-green-500 p-3 rounded-md text-sm mb-4">
-      {{ successAlert }}
-    </div>
-  
-    <!-- Profile Information -->
-    <div class="flex flex-col md:flex-row gap-6 mb-8 items-stretch">
-      <div class="order-1 w-full md:w-64 bg-gray-100 rounded-md overflow-hidden">
-        <img
-          [src]="profile.photoUrl"
-          alt="Photo de profil"
-          class="w-full h-full object-cover"
-        />
-      </div>
-  
-      <div class="order-2 w-full md:flex-1">
-        <div class="h-full border rounded-lg shadow-sm">
-          <div class="p-6">
-            <div class="space-y-2">
-              <div class="flex justify-between">
-                <p class="text-sm text-gray-500">Last Name</p>
-                <p class="font-medium">{{ profile.lastName }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p class="text-sm text-gray-500">First Name</p>
-                <p class="font-medium">{{ profile.firstName }}</p>
-              </div>
-              <div class="flex justify-between">
-                <p class="text-sm text-gray-500">Email</p>
-                <p class="font-medium">{{ profile.email }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="px-6 pb-6 flex flex-col sm:flex-row gap-2 justify-end mt-auto">
-            <a
-              routerLink="/userProfile/edit-pwd"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2"
-            >
+  <div *ngIf="successAlert" class="bg-green-50 text-green-500 p-3 rounded-md text-sm mb-4">
+    {{ successAlert }}
+  </div>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4 w-4 mr-2"
-              >
-                <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path>
-                <circle cx="16.5" cy="7.5" r=".5"></circle>
-              </svg>
-              Change Password
-            </a>
-            <a
-              routerLink="/userProfile/edit-profile"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="h-4 w-4 mr-2"
-              >
-                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                <path d="m15 5 4 4"></path>
-              </svg>
-              Edit Profile
-            </a>
-          </div>
-        </div>
-      </div>
+  <!-- Profile Information -->
+  <div class="flex flex-col md:flex-row gap-6 mb-8 items-stretch">
+    <div class="order-1 w-full md:w-64 bg-gray-100 rounded-md overflow-hidden">
+      <img [src]="profile.photoUrl" alt="Photo de profil" class="w-full h-full object-cover" />
     </div>
-  
-    <!-- Annotated Images Section -->
-    <div class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Annotated Images</h2>
-      <div class="space-y-4">
-        <div *ngFor="let image of annotatedImages" class="border rounded-lg overflow-hidden shadow-sm">
-          <div class="flex flex-col sm:flex-row">
-            <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0">
-              <img
-                src="/"
-                alt="Image annotée"
-                class="w-full h-full object-cover"
-              />
+
+    <div class="order-2 w-full md:flex-1">
+      <div class="h-full border rounded-lg shadow-sm">
+        <div class="p-6">
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <p class="text-sm text-gray-500">Last Name</p>
+              <p class="font-medium">{{ profile.lastName }}</p>
             </div>
-            <div class="flex-1 p-4">
-              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <h3 class="font-semibold text-lg">{{ image.title }}</h3>
-                  </div>
-                  <p class="text-sm text-gray-500">ID: {{ image.id }} • {{ image.submittedAgo }}</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-4 mt-4">
-                <div class="flex items-center gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-gray-500"
-                  >
-                    <path d="M12 5v14"></path>
-                    <path d="M18 13l-6 6"></path>
-                    <path d="M6 13l6 6"></path>
-                  </svg>
-                  <span class="text-sm">{{ image.polygonsCount }} polygons</span>
-                </div>
-              </div>
-              <div class="flex justify-between mt-4">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4 mr-2"
-                  >
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                  View Details
-                </button>
-              </div>
+            <div class="flex justify-between">
+              <p class="text-sm text-gray-500">First Name</p>
+              <p class="font-medium">{{ profile.firstName }}</p>
+            </div>
+            <div class="flex justify-between">
+              <p class="text-sm text-gray-500">Email</p>
+              <p class="font-medium">{{ profile.email }}</p>
             </div>
           </div>
         </div>
-  
-        <div class="flex justify-center">
-          <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
-            View More Annotations
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4 ml-2"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
+        <div class="px-6 pb-6 flex flex-col sm:flex-row gap-2 justify-end mt-auto">
+          <a routerLink="/userProfile/edit-pwd"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-4 w-4 mr-2">
+              <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path>
+              <circle cx="16.5" cy="7.5" r=".5"></circle>
             </svg>
-          </button>
+            Change Password
+          </a>
+          <a routerLink="/userProfile/edit-profile"
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-4 w-4 mr-2">
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+              <path d="m15 5 4 4"></path>
+            </svg>
+            Edit Profile
+          </a>
         </div>
       </div>
     </div>
-  
-    <div>
-      <h2 class="text-2xl font-bold mb-4">Tickets History</h2>
-      <div class="space-y-4">
-        <div *ngFor="let ticket of ticketsHistory" class="border rounded-lg overflow-hidden shadow-sm">
-          <div class="flex flex-col sm:flex-row">
-            <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0">
-              <img
-                src="/"
-                alt="Image du ticket"
-                class="w-full h-full object-cover"
-              />
+  </div>
+
+  <!-- Annotated Images Section -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Annotated Images</h2>
+    <div class="space-y-4">
+      <div *ngFor="let image of annotatedImages" class="border rounded-lg overflow-hidden shadow-sm">
+        <div class="flex flex-col sm:flex-row">
+          <!-- Affichage de l'image récupérée depuis le backend -->
+          <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0">
+            <img
+              [src]="image.imageUrl"
+              alt="Image annotée"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="flex-1 p-4">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+              <div>
+                <!-- Titre : nom du fichier JSON -->
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-lg">{{ image.fileName }}</h3>
+                </div>
+                <!-- Nom du sample -->
+                <p class="text-sm text-gray-500">Sample : {{ image.testFolder }}</p>
+                <!-- Affichage de la ville -->
+                <p class="text-sm text-gray-500">City : {{ image.cityFolder | titlecase }}</p>
+                <!-- Affichage du nombre de descriptions remplies sur le total -->
+                <p class="text-sm text-gray-500">Descriptions on object : {{ image.descriptions }}</p>
+              </div>
             </div>
-            <div class="flex-1 p-4">
-              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
-                  </div>
-                  <p class="text-sm text-gray-500">Ticket ID: {{ ticket.id }} • {{ ticket.submittedAgo }}</p>
-                </div>
+            <div class="flex items-center gap-4 mt-4">
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="text-gray-500">
+                  <path d="M12 5v14"></path>
+                  <path d="M18 13l-6 6"></path>
+                  <path d="M6 13l6 6"></path>
+                </svg>
+                <!-- Affichage du nombre de figures -->
+                <span class="text-sm">{{ image.labelCount }} figures</span>
               </div>
-              <div class="flex items-center gap-4 mt-4">
-                <div class="flex items-center gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="text-gray-500"
-                  >
-                    <path d="M12 5v14"></path>
-                    <path d="M18 13l-6 6"></path>
-                    <path d="M6 13l6 6"></path>
-                  </svg>
-                  <span class="text-sm">{{ ticket.polygonsCount }} polygons</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                    [ngClass]="ticket.statusClass"
-                  >
-                    <!-- Exemple d'icône d'état -->
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <span class="text-sm">{{ ticket.status }}</span>
-                </div>
-              </div>
-              <div class="flex justify-between mt-4">
-                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4 mr-2"
-                  >
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                  View Details
-                </button>
-              </div>
+            </div>
+            <div class="flex justify-between mt-4">
+              <!-- Bouton View Details (inchangé) -->
+              <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-4 w-4 mr-2">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                View Details
+              </button>
+              <!-- Bouton Edit Image redirigeant vers /edit/{ville}/{fileName} -->
+              <a [routerLink]="['/edit', image.cityFolder, image.fileName]"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-4 w-4 mr-2">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                  <path d="m15 5 4 4"></path>
+                </svg>
+                Edit Image
+              </a>
             </div>
           </div>
         </div>
+      </div>
   
-        <div class="flex justify-center">
-          <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
-            View All Tickets
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4 ml-2"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        </div>
+      <div class="flex justify-center">
+        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+          View More Annotations
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="h-4 w-4 ml-2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
-  </div>  
+  </div>
+  
+
+  <div>
+    <h2 class="text-2xl font-bold mb-4">Tickets History</h2>
+    <div class="space-y-4">
+      <div *ngFor="let ticket of ticketsHistory" class="border rounded-lg overflow-hidden shadow-sm">
+        <div class="flex flex-col sm:flex-row">
+          <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0">
+            <img src="/" alt="Image du ticket" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 p-4">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
+                </div>
+                <p class="text-sm text-gray-500">Ticket ID: {{ ticket.id }} • {{ ticket.submittedAgo }}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 mt-4">
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="text-gray-500">
+                  <path d="M12 5v14"></path>
+                  <path d="M18 13l-6 6"></path>
+                  <path d="M6 13l6 6"></path>
+                </svg>
+                <span class="text-sm">{{ ticket.polygonsCount }} polygons</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"
+                  [ngClass]="ticket.statusClass">
+                  <!-- Exemple d'icône d'état -->
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span class="text-sm">{{ ticket.status }}</span>
+              </div>
+            </div>
+            <div class="flex justify-between mt-4">
+              <button
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="h-4 w-4 mr-2">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+          View All Tickets
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 ml-2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

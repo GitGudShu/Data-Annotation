@@ -32,6 +32,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/uploads/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
 
+app.use('/images', express.static(path.join(__dirname, 'data', 'val_images')));
+
 // Root endpoint
 app.get('/', (req, res) => {
     res.json({ message: "Hello from the Node.js backend!" });

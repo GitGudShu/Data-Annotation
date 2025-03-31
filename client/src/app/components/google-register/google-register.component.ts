@@ -50,9 +50,13 @@ export class GoogleRegisterComponent {
 					});
 			})
 			.catch((error) => {
-				console.error('Error connecting with Google:', error);
-				alert('Failed Google login');
-			});
+				if (error.code === 'auth/cancelled-popup-request') {
+				  console.warn('La connexion via popup a été annulée par l\'utilisateur.');
+				} else {
+				  console.error('Error connecting with Google:', error);
+				  alert('Failed Google login');
+				}
+			  });			  
 	}
 
 	onFileSelected(event: Event): void {
