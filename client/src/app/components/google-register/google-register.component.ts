@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-google-register',
@@ -15,6 +16,7 @@ export class GoogleRegisterComponent {
 	constructor(
 		private http: HttpClient,
 		private auth: Auth,
+    private router: Router
 	) { }
 
 	registerWithGoogle(): void {
@@ -78,6 +80,7 @@ export class GoogleRegisterComponent {
 			.subscribe({
 				next: (res) => {
 					console.log('Registration successful', res);
+          this.router.navigate(['']);
 					alert('Registration successful');
 				},
 				error: (err) => {

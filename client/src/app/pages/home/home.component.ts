@@ -20,7 +20,7 @@ export class HomeComponent {
 	redirectToNext(): void {
 		const user = this.userStore.getUserValue();
 		if (user) {
-			this.router.navigate(['/imageList']);
+			this.claimRandomAndRedirect();
 		} else {
 			this.router.navigate(['/login']);
 		}
