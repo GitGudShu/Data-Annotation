@@ -9,8 +9,8 @@ const {
   getActiveSample,
   saveAnnotationForImage,
   claimRandomImage
-} = require('../controllers/annotationController');
-
+} = require('../controllers/annotationController');     
+   
 router.get('/all-labels', getAllLabels);
 router.get('/data-samples', getDataSamples);
 router.get('/data-samples/active-sample', getActiveSample);
