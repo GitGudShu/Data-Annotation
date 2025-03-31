@@ -4,20 +4,26 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
 	providedIn: 'root'
 })
-
 export class UserStoreService {
-	private userSubject = new BehaviorSubject<any>(null); // null par défaut
-	public user$: Observable<any> = this.userSubject.asObservable();
+  private userSubject = new BehaviorSubject<any>(this.getUserFromLocalStorage());
+  public user$: Observable<any> = this.userSubject.asObservable();
 
-	setUser(user: any): void {
-		this.userSubject.next(user);
-	}
+  private getUserFromLocalStorage(): any {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  }
 
-	clear(): void {
-		this.userSubject.next(null);
-	}
+  setUser(user: any): void {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
 
-	getUserValue(): any {
-		return this.userSubject.value;
-	}
+  clear(): void {
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+  }
+
+  getUserValue(): any {
+    return this.userSubject.value;
+  }
 }

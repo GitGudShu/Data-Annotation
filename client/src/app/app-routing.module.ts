@@ -19,7 +19,7 @@ const routes: Routes = [
 	{ path: 'imageList', component: ImageListComponent, canActivate: [AuthGuard] },
 	{ path: 'userProfile', component: UserProfileComponent, canActivate: [AuthGuard] },
 	{ path: 'dashboard', component: AdminPanelComponent, canActivate: [RoleGuard], data: { role: 'admin' } },
-  { path: 'edit/:city/:id', component: EditImageComponent, canActivate: [AuthGuard] },
+  	{ path: 'edit/:city/:id', component: EditImageComponent, canActivate: [AuthGuard] },
 	{ path: 'register', component: GoogleRegisterComponent },
 	{ path: 'login', component: GoogleLoginComponent },
 	{ path: 'userProfile/edit-pwd', component: ChangePasswordProfileComponent },

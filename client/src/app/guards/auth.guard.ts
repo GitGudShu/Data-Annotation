@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
 	canActivate(): boolean {
 		const user = this.userStore.getUserValue();
 		if (!user) {
+			console.log("il n'y a pas de user")
 			this.router.navigate(['/']);
 			return false;
 		}
