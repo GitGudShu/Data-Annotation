@@ -24,10 +24,10 @@
           Home
         </a>
 
-				<a *ngIf="user.role === 'annotator' || user.role === 'admin'"
-					routerLink="/imageList"
+				<a *ngIf="user.role"
+					routerLink="/userProfile"
 					class="text-white/80 hover:text-white hover:underline underline-offset-4 transition-colors">
-					Image List
+					Your Profile
 				</a>
 
 				<a *ngIf="user.role === 'admin'"
