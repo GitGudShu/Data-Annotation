@@ -27,7 +27,7 @@
                 class="btn btn-primary btn-lg gap-1"
               >
                 Get Started
-                <span [innerHTML]="arrowRightIcon" class="h-4 w-4"></span>
+                <span [innerHTML]="icons['arrowRight']" class="h-4 w-4"></span>
               </button>
               <div (click)="redirectToDemo()" class="inline-block">
                 <button class="btn btn-outline btn-lg">View Demo</button>
@@ -36,21 +36,21 @@
             <div class="flex items-center gap-4 text-sm">
               <div class="flex items-center gap-1">
                 <span
-                  [innerHTML]="checkCircleIcon"
+                  [innerHTML]="icons['checkCircle']"
                   class="h-4 w-4 text-primary"
                 ></span>
                 <span>Intuitive</span>
               </div>
               <div class="flex items-center gap-1">
                 <span
-                  [innerHTML]="checkCircleIcon"
+                  [innerHTML]="icons['checkCircle']"
                   class="h-4 w-4 text-primary"
                 ></span>
                 <span>Accurate</span>
               </div>
               <div class="flex items-center gap-1">
                 <span
-                  [innerHTML]="checkCircleIcon"
+                  [innerHTML]="icons['checkCircle']"
                   class="h-4 w-4 text-primary"
                 ></span>
                 <span>Fast</span>
@@ -136,7 +136,7 @@
                 class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10"
               >
                 <span
-                  [innerHTML]="usersIcon"
+                  [innerHTML]="icons[card.icon]"
                   class="h-6 w-6 text-primary"
                 ></span>
               </div>
@@ -183,7 +183,7 @@
                 *ngFor="let feature of features"
               >
                 <span
-                  [innerHTML]="checkCircleIcon"
+                  [innerHTML]="icons['checkCircle']"
                   class="h-5 w-5 text-primary"
                 ></span>
                 <span>{{ feature }}</span>
