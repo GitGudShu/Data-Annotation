@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnnotationService, PolygonViewModel } from '../../services/annotation.service';
 import { UserStoreService } from '../../services/user-store.service';
 import { HttpClient } from '@angular/common/http';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-image',
@@ -25,7 +26,6 @@ export class EditImageComponent implements OnInit {
   displayedHeight!: number;
 
   polygons: PolygonViewModel[] = [];
-
   claimRandomImageIsLoading: boolean = false;
 
   constructor(
@@ -37,14 +37,16 @@ export class EditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.city = this.route.snapshot.paramMap.get('city') || '';
-    this.imageId = this.route.snapshot.paramMap.get('id') || '';
-    this.imageUrl = `http://localhost:5000/api/images/${this.city}/${this.imageId}`;
+    this.route.params.subscribe(params => {
+      this.city = params['city'];
+      this.imageId = params['id'];
+      this.imageUrl = `http://localhost:5000/api/images/${this.city}/${this.imageId}`;
 
-    this.annotationService.getAnnotation(this.city, this.imageId).subscribe(data => {
-      this.imageWidth = data.width;
-      this.imageHeight = data.height;
-      this.polygons = data.polygons;
+      this.annotationService.getAnnotation(this.city, this.imageId).subscribe(data => {
+        this.imageWidth = data.width;
+        this.imageHeight = data.height;
+        this.polygons = data.polygons;
+      });
     });
   }
 
@@ -55,7 +57,7 @@ export class EditImageComponent implements OnInit {
   goToNextImage(): void {
     this.claimRandomImageIsLoading = true;
 
-    this.userStore.user$.subscribe(user => {
+    this.userStore.user$.pipe(take(1)).subscribe(user => {
       this.http.post<{ city: string; imageId: string }>(
         'http://localhost:5000/api/annotations/claim-random',
         { userId: user.id }
@@ -65,6 +67,7 @@ export class EditImageComponent implements OnInit {
           this.router.navigate(['/edit', city, imageId]);
         },
         error: err => {
+          this.claimRandomImageIsLoading = false;
           console.error('No available image:', err);
           alert('No images left to annotate.');
         }
