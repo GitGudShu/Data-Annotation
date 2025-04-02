@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnnotationService, PolygonViewModel } from '../../services/annotation.service';
+import { UserStoreService } from '../../services/user-store.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-image',
@@ -24,10 +26,14 @@ export class EditImageComponent implements OnInit {
 
   polygons: PolygonViewModel[] = [];
 
+  claimRandomImageIsLoading: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private annotationService: AnnotationService
+    private annotationService: AnnotationService,
+    private userStore: UserStoreService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +50,44 @@ export class EditImageComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/']);
+  }
+
+  goToNextImage(): void {
+    this.claimRandomImageIsLoading = true;
+
+    this.userStore.user$.subscribe(user => {
+      this.http.post<{ city: string; imageId: string }>(
+        'http://localhost:5000/api/annotations/claim-random',
+        { userId: user.id }
+      ).subscribe({
+        next: ({ city, imageId }) => {
+          this.claimRandomImageIsLoading = false;
+          this.router.navigate(['/edit', city, imageId]);
+        },
+        error: err => {
+          console.error('No available image:', err);
+          alert('No images left to annotate.');
+        }
+      });
+    });
+  }
+
+  requestAdminReview(): void {
+    this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
+      status: 1
+    }).subscribe(res => {
+      console.log('Requesting admin review!', res);
+    });
+    alert('Requesting admin review!');
+  }
+
+  sendAnnotation(): void {
+    this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
+      status: 2
+    }).subscribe(res => {
+      console.log('Image sent!', res);
+    });
+    alert('Image sent! Faut faire un modal pour proposer de passer à l\'image suivante ou retourner à la page d\'accueil');
   }
 
   onPolygonClick(event: MouseEvent, index: number) {
@@ -106,6 +150,7 @@ export class EditImageComponent implements OnInit {
       next: res => console.log('Annotations saved:', res),
       error: err => console.error('Save failed:', err)
     });
+    this.router.navigate(['/']);
   }
 
   clearForm(): void {

@@ -8,7 +8,8 @@ const {
   setActiveSample,
   getActiveSample,
   saveAnnotationForImage,
-  claimRandomImage
+  claimRandomImage,
+  updateAnnotationStatus
 } = require('../controllers/annotationController');     
    
 router.get('/all-labels', getAllLabels);
@@ -18,6 +19,7 @@ router.post('/data-sample', createDataSample);
 router.post('/data-samples/active-sample', setActiveSample);
 router.post('/save/:city/:imageName', saveAnnotationForImage);
 router.post('/claim-random', claimRandomImage);
+router.patch('/status/:imageId', updateAnnotationStatus);
 
 router.get('/:city/:imageName', getAnnotationByCityAndImage);
 

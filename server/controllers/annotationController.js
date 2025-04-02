@@ -335,7 +335,7 @@ exports.claimRandomImage = (req, res) => {
 
   let availableImages = [];
 
-  timestamp = new Date().toISOString();
+  const timestamp = Date.now();
   console.log("Checking for unclaimed images in active sample...");
   for (const city of cities) {
     const cityPath = path.join(sampleDir, city);
@@ -350,7 +350,7 @@ exports.claimRandomImage = (req, res) => {
       }
     }
   }
-  console.log(`Done in ${new Date() - timestamp}ms`);
+  console.log(`Done in ${Date.now() - timestamp}ms`);
 
   if (availableImages.length === 0) {
     return res.status(404).json({ error: 'No unclaimed images available in active sample.' });
@@ -358,10 +358,53 @@ exports.claimRandomImage = (req, res) => {
 
   const selected = availableImages[Math.floor(Math.random() * availableImages.length)];
   const annotation = JSON.parse(fs.readFileSync(selected.path, 'utf-8'));
+
   annotation.author = userId;
-  console.log(`Claimed image ${selected.imageId} for user ${userId}`);
+  annotation.status = 0; // 0 = no ticket requested 
+
   fs.writeFileSync(selected.path, JSON.stringify(annotation, null, 2));
+  console.log(`Claimed image ${selected.imageId} for user ${userId}`);
 
   res.json({ city: selected.city, imageId: selected.imageId });
+};
+
+
+exports.updateAnnotationStatus = (req, res) => {
+  const { imageId } = req.params;
+  const { status } = req.body;
+
+  if (![1, 2].includes(status)) {
+    return res.status(400).json({ error: 'Invalid status. Must be 1 or 2.' });
+  }
+
+  const activePath = path.join(__dirname, '../data/active_sample.json');
+  if (!fs.existsSync(activePath)) {
+    return res.status(400).json({ error: 'No active sample set.' });
+  }
+
+  const activeSample = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
+  const sampleDir = path.join(__dirname, '../data/data_samples', activeSample.safeName);
+
+  const cities = fs.readdirSync(sampleDir).filter(city => {
+    const cityPath = path.join(sampleDir, city);
+    return fs.statSync(cityPath).isDirectory();
+  });
+
+  let found = false;
+  for (const city of cities) {
+    const filePath = path.join(sampleDir, city, `${imageId}_gtFine_polygons.json`);
+    if (fs.existsSync(filePath)) {
+      const annotation = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      annotation.status = status;
+      fs.writeFileSync(filePath, JSON.stringify(annotation, null, 2));
+      console.log(`Updated status of ${imageId} in city ${city} to ${status}`);
+      found = true;
+      return res.json({ message: 'Status updated successfully.', city, imageId, status });
+    }
+  }
+
+  if (!found) {
+    res.status(404).json({ error: `Image ${imageId} not found in active sample.` });
+  }
 };
 
