@@ -2,20 +2,39 @@
   <!-- Header with Back Button -->
   <header class="sticky top-0 z-10 bg-white border-b border-gray-100 shadow-sm">
     <div class="container mx-auto px-4 py-3">
-      <button (click)="goBack()" class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors flex items-center group">
-        <svg class="h-4 w-4 mr-1.5 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      <button
+        (click)="goBack()"
+        class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors flex items-center group"
+      >
+        <svg
+          class="h-4 w-4 mr-1.5 group-hover:-translate-x-0.5 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
         <span>Back</span>
       </button>
     </div>
   </header>
 
-  <main class="container mx-auto px-4 md:px-6 py-6 flex-1 flex flex-col lg:flex-row gap-6">
+  <main
+    class="container mx-auto px-4 md:px-6 py-6 flex-1 flex flex-col lg:flex-row gap-6"
+  >
     <!-- Image Viewer Section -->
-    <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div
+      class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden"
+    >
       <!-- Image Container -->
-      <div class="relative flex items-center justify-center bg-gray-900/5 p-2 md:p-4">
+      <div
+        class="relative flex items-center justify-center bg-gray-900/5 p-2 md:p-4"
+      >
         <div class="relative w-full max-w-full overflow-hidden rounded-lg">
           <div *ngIf="imageUrl" class="transition-transform">
             <!-- Main Image -->
@@ -28,7 +47,9 @@
 
             <!-- SVG Overlay -->
             <svg
-              *ngIf="displayedWidth && displayedHeight && imageHeight && imageHeight"
+              *ngIf="
+                displayedWidth && displayedHeight && imageHeight && imageHeight
+              "
               class="absolute inset-0 w-full h-full pointer-events-none overlay-svg"
               [attr.width]="displayedWidth"
               [attr.height]="displayedHeight"
@@ -38,7 +59,9 @@
                 *ngFor="let poly of polygons; let i = index"
                 [attr.points]="poly.points"
                 class="overlay-polygon cursor-pointer transition-colors duration-200"
-                [attr.stroke]="selectedPolygonIndex === i ? '#4f46e5' : '#ffffff'"
+                [attr.stroke]="
+                  selectedPolygonIndex === i ? '#4f46e5' : '#ffffff'
+                "
                 [attr.stroke-width]="selectedPolygonIndex === i ? 3 : 2"
                 [attr.fill]="getPolygonFill(poly)"
                 (click)="onPolygonClick($event, i)"
@@ -48,8 +71,7 @@
             <!-- Tooltip -->
             <div
               *ngIf="tooltip"
-              class="absolute bg-white border border-indigo-500 text-indigo-700 text-xs font-medium px-2.5 py-1.5 rounded-md shadow-md z-10
-                    animate-fade-in-up transition-opacity duration-300 ease-out"
+              class="absolute bg-white border border-indigo-500 text-indigo-700 text-xs font-medium px-2.5 py-1.5 rounded-md shadow-md z-10 animate-fade-in-up transition-opacity duration-300 ease-out"
               [style.left.px]="tooltip.x"
               [style.top.px]="tooltip.y - 35"
             >
@@ -60,7 +82,9 @@
       </div>
 
       <!-- Controls -->
-      <div class="flex justify-between items-center p-4 border-t border-gray-100">
+      <div
+        class="flex justify-between items-center p-4 border-t border-gray-100"
+      >
         <div class="flex items-center gap-2">
           <!-- Next Button -->
           <button
@@ -68,11 +92,21 @@
             class="px-4 py-1.5 text-sm font-medium border border-gray-200 rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 flex items-center"
           >
             <span>Next</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 ml-1.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
-
         </div>
 
         <!-- Action Buttons (Moved from form) -->
@@ -82,8 +116,19 @@
             (click)="saveAnnotation()"
             class="px-3 py-1.5 text-sm font-medium rounded-md bg-purple-600 hover:bg-purple-700 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 flex items-center"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-1.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+              />
             </svg>
             <span>Save for Later</span>
           </button>
@@ -93,8 +138,19 @@
             (click)="sendAnnotation()"
             class="px-3 py-1.5 text-sm font-medium rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 flex items-center"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 12h15" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mr-1.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 5l7 7-7 7M5 12h15"
+              />
             </svg>
             <span>Send</span>
           </button>
@@ -105,29 +161,47 @@
             class="text-xs font-medium px-2.5 py-1.5 rounded-md bg-amber-100 text-amber-700 hover:bg-amber-200 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
           >
             <span class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
               Request Review
             </span>
           </button>
-
         </div>
       </div>
     </div>
 
     <!-- Annotation Panel -->
-    <div class="w-full lg:w-96 shrink-0 bg-white rounded-xl shadow-md p-5 space-y-6 border border-gray-200 self-start sticky top-20">
-      <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+    <div
+      class="w-full lg:w-96 shrink-0 bg-white rounded-xl shadow-md p-5 space-y-6 border border-gray-200 self-start sticky top-20"
+    >
+      <div
+        class="flex justify-between items-center border-b border-gray-100 pb-3"
+      >
         <h3 class="text-xl font-semibold text-gray-800">Annotation Details</h3>
       </div>
 
       <!-- Info Display -->
       <div class="grid grid-cols-2 gap-y-2 text-sm">
         <span class="text-gray-500">Image ID:</span>
-        <span class="font-medium text-gray-800 text-right">{{ imageId || 'N/A' }}</span>
+        <span class="font-medium text-gray-800 text-right">{{
+          imageId || "N/A"
+        }}</span>
         <span class="text-gray-500">Folder:</span>
-        <span class="font-medium text-gray-800 text-right">{{ city || 'N/A' }}</span>
+        <span class="font-medium text-gray-800 text-right">{{
+          city || "N/A"
+        }}</span>
       </div>
 
       <!-- Selected Geometry Section -->
@@ -136,7 +210,9 @@
           <h4 class="text-sm font-medium text-gray-700 mb-3">Danger Level</h4>
           <div class="grid grid-cols-1 gap-2.5">
             <!-- Level 1 - Very Low -->
-            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+            <label
+              class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
               <input
                 type="radio"
                 name="danger"
@@ -152,7 +228,9 @@
             </label>
 
             <!-- Level 2 - Low -->
-            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+            <label
+              class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
               <input
                 type="radio"
                 name="danger"
@@ -168,7 +246,9 @@
             </label>
 
             <!-- Level 3 - Medium -->
-            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+            <label
+              class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
               <input
                 type="radio"
                 name="danger"
@@ -184,7 +264,9 @@
             </label>
 
             <!-- Level 4 - High -->
-            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+            <label
+              class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
               <input
                 type="radio"
                 name="danger"
@@ -200,7 +282,9 @@
             </label>
 
             <!-- Level 5 - Critical -->
-            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+            <label
+              class="flex items-center space-x-3 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
               <input
                 type="radio"
                 name="danger"
@@ -219,7 +303,9 @@
 
         <!-- Description -->
         <div class="space-y-2">
-          <label class="text-sm font-medium text-gray-700 block">Description</label>
+          <label class="text-sm font-medium text-gray-700 block"
+            >Description</label
+          >
           <textarea
             [(ngModel)]="annotationDescription"
             rows="3"
@@ -230,7 +316,10 @@
       </div>
 
       <!-- No Selection State -->
-      <div *ngIf="!selectedGeometry" class="py-6 text-center text-gray-500 italic">
+      <div
+        *ngIf="!selectedGeometry"
+        class="py-6 text-center text-gray-500 italic"
+      >
         Select a polygon on the image to annotate
       </div>
 
@@ -239,11 +328,22 @@
         <button
           (click)="clearForm()"
           [disabled]="!selectedGeometry"
-          [ngClass]="{'opacity-50 cursor-not-allowed': !selectedGeometry}"
+          [ngClass]="{ 'opacity-50 cursor-not-allowed': !selectedGeometry }"
           class="w-full bg-gray-100 hover:bg-gray-200 text-sm font-medium px-4 py-2.5 rounded-md text-gray-800 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 flex items-center justify-center"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
           </svg>
           Reset
         </button>
@@ -251,4 +351,3 @@
     </div>
   </main>
 </div>
-
