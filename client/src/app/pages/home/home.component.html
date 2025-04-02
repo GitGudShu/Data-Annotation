@@ -1,53 +1,237 @@
-<div class="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-white px-4 mt-10 text-center">
-  <main class="flex flex-col items-center justify-center max-w-3xl">
-    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-      Prioritize Critical Objects for Safer Urban Driving
-    </h1>
-
-    <p class="text-lg md:text-xl text-gray-600 mb-8">
-      Annotate images effortlessly and enhance autonomous vehicle performance.
-    </p>
-
-    <a (click)="redirectToNext()"
-        class="inline-flex items-center px-6 py-3 rounded-lg bg-[#1e1e2f] text-white font-medium transition-all duration-200 hover:bg-[#2a2a3d] hover:translate-y-[-2px] hover:shadow-md"
-        style="cursor: pointer;">
-      Get Started →
-    </a>
-
-    <div class="my-12">
-      <img src="assets/imageIllu.png"
-            alt="CityScapes dataset visualization showing prioritized urban driving objects"
-            width="600" height="300"
-            class="rounded-lg shadow-md" />
-    </div>
+<div
+  class="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-white px-4 mt-10 text-center"
+>
+  <main class="flex-1 bg-white">
+    <!-- Hero Section -->
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <h1
+                class="text-3xl text-left font-bold tracking-tighter sm:text-5xl"
+              >
+                Prioritize Critical Objects for Safer Urban Driving
+              </h1>
+              <p
+                class="text-gray-500 text-left md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Annotate images effortlessly and enhance autonomous vehicle
+                performance. Classify polygon criticality with ease and
+                accuracy.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <button
+                (click)="redirectToNext()"
+                class="btn btn-primary btn-lg gap-1"
+              >
+                Get Started
+                <span [innerHTML]="arrowRightIcon" class="h-4 w-4"></span>
+              </button>
+              <a routerLink="/demo" class="inline-block">
+                <button class="btn btn-outline btn-lg">View Demo</button>
+              </a>
+            </div>
+            <div class="flex items-center gap-4 text-sm">
+              <div class="flex items-center gap-1">
+                <span
+                  [innerHTML]="checkCircleIcon"
+                  class="h-4 w-4 text-primary"
+                ></span>
+                <span>Intuitive</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span
+                  [innerHTML]="checkCircleIcon"
+                  class="h-4 w-4 text-primary"
+                ></span>
+                <span>Accurate</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span
+                  [innerHTML]="checkCircleIcon"
+                  class="h-4 w-4 text-primary"
+                ></span>
+                <span>Fast</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mx-auto lg:mx-0 relative aspect-video overflow-hidden rounded-xl border bg-muted"
+          >
+            <img
+              src="assets/imageIllu.png"
+              alt="CityScapes dataset visualization showing prioritized urban driving objects"
+              class="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- That's the loading overlay, the button go through all the data to pick from the unclaimed so it can take a moment :) -->
-    <div *ngIf="claimRandomImageIsLoading" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
-      <div class="bg-white px-6 py-4 rounded-xl shadow-xl text-center space-y-2 max-w-sm w-full">
+
+    <div
+      *ngIf="claimRandomImageIsLoading"
+      class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center"
+    >
+      <div
+        class="bg-white px-6 py-4 rounded-xl shadow-xl text-center space-y-2 max-w-sm w-full"
+      >
         <div class="flex items-center justify-center space-x-2">
-          <svg class="animate-spin h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor"
-              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
+          <svg
+            class="animate-spin h-5 w-5 text-purple-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+            />
           </svg>
           <span class="text-gray-700 font-medium">Loading...</span>
         </div>
-        <p class="text-sm text-gray-500">Fetching unclaimed segmented image<br>in the active data sample...</p>
       </div>
     </div>
 
+    <!-- How It Works Section -->
+    <section class="w-full py-12 md:py-24 lg:py-32 bg-muted">
+      <div class="container px-4 md:px-6">
+        <div
+          class="flex flex-col items-center justify-center space-y-4 text-center"
+        >
+          <div class="space-y-2">
+            <h2
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+            >
+              How It Works
+            </h2>
+            <p
+              class="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+            >
+              Our platform makes polygon criticality annotation simple and
+              efficient
+            </p>
+          </div>
+        </div>
+        <div
+          class="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-8"
+        >
+          <div class="card" *ngFor="let card of howItWorksCards">
+            <div
+              class="card-content p-6 flex flex-col items-center text-center space-y-4"
+            >
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10"
+              >
+                <span
+                  [innerHTML]="usersIcon"
+                  class="h-6 w-6 text-primary"
+                ></span>
+              </div>
+              <h3 class="text-xl font-bold">{{ card.title }}</h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                {{ card.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div class="container px-4 md:px-6">
+        <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+          <div
+            class="mx-auto lg:mx-0 relative aspect-video overflow-hidden rounded-xl border bg-muted"
+          >
+            <img
+              src="assets/imageIllu.png"
+              alt="Annotation Interface Example"
+              class="object-cover w-full h-full"
+            />
+          </div>
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <h2
+                class="text-3xl text-left font-bold tracking-tighter sm:text-4xl"
+              >
+                Powerful Annotation Tools
+              </h2>
+              <p
+                class="text-gray-500 text-left md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Our platform provides advanced tools for precise polygon
+                criticality classification
+              </p>
+            </div>
+            <ul class="grid gap-2">
+              <li
+                class="flex items-center gap-2"
+                *ngFor="let feature of features"
+              >
+                <span
+                  [innerHTML]="checkCircleIcon"
+                  class="h-5 w-5 text-primary"
+                ></span>
+                <span>{{ feature }}</span>
+              </li>
+            </ul>
+            <div>
+              <a routerLink="/signup">
+                <button class="btn btn-primary btn-lg">
+                  Start Annotating Today
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="border-t py-6 md:py-8">
-    <div class="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 text-center">
+    <div
+      class="container flex flex-col items-center justify-center gap-4 px-4 md:px-6 text-center"
+    >
       <div class="flex items-center gap-2 font-bold">
-        <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
-                fill="#FF3366" fill-opacity="0.2" />
-          <path d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
-                stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
-          <path d="M16.5 21L13.5 24L16.5 27"
-                stroke="#FF3366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 36 36"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
+            fill="#FF3366"
+            fill-opacity="0.2"
+          />
+          <path
+            d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
+            stroke="#FF3366"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M16.5 21L13.5 24L16.5 27"
+            stroke="#FF3366"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
         <span>LABELSCAPE</span>
       </div>
@@ -56,5 +240,4 @@
       </p>
     </div>
   </footer>
-
 </div>

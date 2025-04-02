@@ -1,51 +1,107 @@
 <header class="bg-[#1e1e2f] text-white sticky top-0 z-50 shadow-md">
-  <div class="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+  <div
+    class="container mx-auto flex h-16 items-center justify-between px-4 md:px-6"
+  >
     <!-- Logo and Desktop Navigation -->
     <div class="flex items-center gap-6 md:gap-10">
       <!-- Logo -->
-      <div class="flex items-center gap-2">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
-            fill="#FF3366" fill-opacity="0.2" />
-          <path
-            d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
-            stroke="#FF3366" stroke-width="2" stroke-linecap="round" />
-          <path d="M16.5 21L13.5 24L16.5 27" stroke="#FF3366" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-        <span class="font-bold text-xl tracking-wider">LABELSCAPE</span>
-      </div>
+      <a routerLink="/" class="flex items-center gap-2 cursor-pointer">
+        <div class="flex items-center gap-2">
+          <svg
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 3C9.716 3 3 9.716 3 18C3 26.284 9.716 33 18 33C26.284 33 33 26.284 33 18C33 9.716 26.284 3 18 3Z"
+              fill="#FF3366"
+              fill-opacity="0.2"
+            />
+            <path
+              d="M12 18C12 14.686 14.686 12 18 12C21.314 12 24 14.686 24 18C24 21.314 21.314 24 18 24"
+              stroke="#FF3366"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M16.5 21L13.5 24L16.5 27"
+              stroke="#FF3366"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="font-bold text-xl tracking-wider">LABELSCAPE</span>
+        </div>
+      </a>
 
       <!-- Desktop Navigation -->
-      <nav *ngIf="user$ | async as user" class="hidden md:flex items-center space-x-6">
-        <a routerLink="/"
-           class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200">
+      <nav
+        *ngIf="user$ | async as user"
+        class="hidden md:flex items-center space-x-6"
+      >
+        <a
+          routerLink="/"
+          class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200"
+        >
           Home
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"></span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"
+          ></span>
         </a>
 
-        <a *ngIf="user.role"
-           routerLink="/userProfile"
-           class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200">
+        <a
+          *ngIf="user.role"
+          routerLink="/userProfile"
+          class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200"
+        >
           Your Profile
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"></span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"
+          ></span>
         </a>
 
-        <a *ngIf="user.role === 'admin'"
-           routerLink="/dashboard"
-           class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200">
+        <a
+          *ngIf="user.role === 'admin'"
+          routerLink="/dashboard"
+          class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200"
+        >
           Admin Dashboard
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"></span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"
+          ></span>
         </a>
       </nav>
     </div>
 
     <!-- Mobile Menu Button -->
-    <button (click)="toggleMobileMenu()" class="md:hidden flex items-center p-2 rounded-md hover:bg-white/10 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    <button
+      (click)="toggleMobileMenu()"
+      class="md:hidden flex items-center p-2 rounded-md hover:bg-white/10 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          *ngIf="!isMobileMenuOpen"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+        <path
+          *ngIf="isMobileMenuOpen"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
       </svg>
     </button>
 
@@ -54,54 +110,110 @@
       <ng-container *ngIf="user$ | async as user; else guest">
         <div class="relative">
           <!-- User Profile Button -->
-          <button (click)="toggleMenu()"
-                  class="flex items-center space-x-3 h-10 px-3 rounded-md hover:bg-white/10 transition-colors">
-            <div class="h-8 w-8 rounded-full overflow-hidden border border-white/20 flex-shrink-0">
+          <button
+            (click)="toggleMenu()"
+            class="flex items-center space-x-3 h-10 px-3 rounded-md hover:bg-white/10 transition-colors"
+          >
+            <div
+              class="h-8 w-8 rounded-full overflow-hidden border border-white/20 flex-shrink-0"
+            >
               <img
                 class="h-full w-full object-cover"
-                [src]="user?.avatar || 'https://gitgudshu.github.io/assets/images/profile.png'"
+                [src]="
+                  user?.avatar ||
+                  'https://gitgudshu.github.io/assets/images/profile.png'
+                "
                 alt="User Avatar"
               />
             </div>
-            <div class="hidden md:flex flex-col text-left text-sm leading-tight">
-              <span class="text-white font-medium truncate max-w-[120px]">{{ user.prenom }} {{ user.nom }}</span>
-              <span class="text-white/60 text-xs font-normal truncate">{{ user.role }}</span>
+            <div
+              class="hidden md:flex flex-col text-left text-sm leading-tight"
+            >
+              <span class="text-white font-medium truncate max-w-[120px]"
+                >{{ user.prenom }} {{ user.nom }}</span
+              >
+              <span class="text-white/60 text-xs font-normal truncate">{{
+                user.role
+              }}</span>
             </div>
             <!-- Dropdown Arrow -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path [attr.d]="isMenuOpen ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-white/60"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                [attr.d]="isMenuOpen ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
             </svg>
           </button>
 
           <!-- Dropdown Menu -->
-          <div *ngIf="isMenuOpen"
-               class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-[60] origin-top-right transition-all duration-200 ease-out"
-               @dropdownAnimation>
+          <div
+            *ngIf="isMenuOpen"
+            class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-[60] origin-top-right transition-all duration-200 ease-out"
+            @dropdownAnimation
+          >
             <div class="py-1">
               <!-- User Info -->
-              <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ user.prenom }} {{ user.nom }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">{{ user.email }}</p>
+              <div
+                class="px-4 py-3 border-b border-gray-200 dark:border-gray-700"
+              >
+                <p class="text-sm font-medium text-gray-900 dark:text-white">
+                  {{ user.prenom }} {{ user.nom }}
+                </p>
+                <p
+                  class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate"
+                >
+                  {{ user.email }}
+                </p>
               </div>
 
               <!-- Menu Items -->
-              <a routerLink="/userProfile"
-                 (click)="handleDropdownOption()"
-                 class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <a
+                routerLink="/userProfile"
+                (click)="handleDropdownOption()"
+                class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
                 </svg>
                 <span>Profile</span>
               </a>
 
-              <button (click)="handleLogout()"
-                      class="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              <button
+                (click)="handleLogout()"
+                class="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mr-3 h-4 w-4 text-gray-500 dark:text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
                 </svg>
                 <span>Logout</span>
               </button>
@@ -113,12 +225,16 @@
       <!-- Guest Navigation -->
       <ng-template #guest>
         <nav class="flex items-center space-x-4">
-          <a routerLink="/login"
-             class="px-4 py-2 rounded-md text-white bg-[#FF3366]/80 hover:bg-[#FF3366] transition-colors">
+          <a
+            routerLink="/login"
+            class="px-4 py-2 rounded-md text-white bg-[#FF3366]/80 hover:bg-[#FF3366] transition-colors"
+          >
             Login
           </a>
-          <a routerLink="/register"
-             class="px-4 py-2 rounded-md text-white/90 border border-white/20 hover:bg-white/10 transition-colors">
+          <a
+            routerLink="/register"
+            class="px-4 py-2 rounded-md text-white/90 border border-white/20 hover:bg-white/10 transition-colors"
+          >
             Register
           </a>
         </nav>
@@ -127,53 +243,80 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div *ngIf="isMobileMenuOpen"
-       class="md:hidden bg-[#1e1e2f] border-t border-white/10 absolute w-full z-[60] shadow-lg"
-       @mobileMenuAnimation>
+  <div
+    *ngIf="isMobileMenuOpen"
+    class="md:hidden bg-[#1e1e2f] border-t border-white/10 absolute w-full z-[60] shadow-lg"
+    @mobileMenuAnimation
+  >
     <div class="px-4 py-3 space-y-1">
       <ng-container *ngIf="user$ | async as user; else mobileGuest">
         <!-- Mobile User Info -->
         <div class="flex items-center space-x-3 p-3 mb-2 bg-white/5 rounded-md">
-          <div class="h-10 w-10 rounded-full overflow-hidden border border-white/20">
+          <div
+            class="h-10 w-10 rounded-full overflow-hidden border border-white/20"
+          >
             <img
               class="h-full w-full object-cover"
-              [src]="user?.avatar || 'https://gitgudshu.github.io/assets/images/profile.png'"
+              [src]="
+                user?.avatar ||
+                'https://gitgudshu.github.io/assets/images/profile.png'
+              "
               alt="User Avatar"
             />
           </div>
           <div class="flex flex-col">
-            <span class="text-white font-medium">{{ user.prenom }} {{ user.nom }}</span>
+            <span class="text-white font-medium"
+              >{{ user.prenom }} {{ user.nom }}</span
+            >
             <span class="text-white/60 text-xs">{{ user.role }}</span>
           </div>
         </div>
 
         <!-- Mobile Navigation Links -->
-        <a routerLink="/"
-           (click)="toggleMobileMenu()"
-           class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+        <a
+          routerLink="/"
+          (click)="toggleMobileMenu()"
+          class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+        >
           Home
         </a>
 
-        <a *ngIf="user.role"
-           routerLink="/userProfile"
-           (click)="toggleMobileMenu()"
-           class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+        <a
+          *ngIf="user.role"
+          routerLink="/userProfile"
+          (click)="toggleMobileMenu()"
+          class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+        >
           Your Profile
         </a>
 
-        <a *ngIf="user.role === 'admin'"
-           routerLink="/dashboard"
-           (click)="toggleMobileMenu()"
-           class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors">
+        <a
+          *ngIf="user.role === 'admin'"
+          routerLink="/dashboard"
+          (click)="toggleMobileMenu()"
+          class="block py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+        >
           Admin Dashboard
         </a>
 
         <!-- Mobile Logout Button -->
-        <button (click)="handleLogout(); toggleMobileMenu()"
-                class="w-full mt-2 text-left py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        <button
+          (click)="handleLogout(); toggleMobileMenu()"
+          class="w-full mt-2 text-left py-2 px-3 text-white/80 hover:text-white hover:bg-white/5 rounded-md transition-colors flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-2 h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
           </svg>
           Logout
         </button>
@@ -182,14 +325,18 @@
       <!-- Mobile Guest Navigation -->
       <ng-template #mobileGuest>
         <div class="grid grid-cols-2 gap-2 py-2">
-          <a routerLink="/login"
-             (click)="toggleMobileMenu()"
-             class="py-2 px-3 text-center rounded-md text-white bg-[#FF3366]/80 hover:bg-[#FF3366] transition-colors">
+          <a
+            routerLink="/login"
+            (click)="toggleMobileMenu()"
+            class="py-2 px-3 text-center rounded-md text-white bg-[#FF3366]/80 hover:bg-[#FF3366] transition-colors"
+          >
             Login
           </a>
-          <a routerLink="/register"
-             (click)="toggleMobileMenu()"
-             class="py-2 px-3 text-center rounded-md text-white/90 border border-white/20 hover:bg-white/10 transition-colors">
+          <a
+            routerLink="/register"
+            (click)="toggleMobileMenu()"
+            class="py-2 px-3 text-center rounded-md text-white/90 border border-white/20 hover:bg-white/10 transition-colors"
+          >
             Register
           </a>
         </div>
@@ -198,8 +345,9 @@
   </div>
 
   <!-- Backdrop for mobile menu -->
-  <div *ngIf="isMenuOpen || isMobileMenuOpen"
-       class="fixed inset-0 bg-black/50 z-40"
-       (click)="closeAllMenus()"></div>
+  <div
+    *ngIf="isMenuOpen || isMobileMenuOpen"
+    class="fixed inset-0 bg-black/50 z-40"
+    (click)="closeAllMenus()"
+  ></div>
 </header>
-
