@@ -34,8 +34,8 @@ export class HomeComponent {
     },
     {
       icon: 'export',
-      title: '3. Export',
-      description: 'Download your annotated data in various formats for your ML models'
+      title: '3. Validate or Submit',
+      description: 'You can validate your annotations yourself or submit them for admin approval.'
     }
   ];
 
@@ -44,8 +44,7 @@ export class HomeComponent {
     'Multiple criticality levels for precise classification',
     'Intuitive polygon selection and editing tools',
     'Collaborative annotation with team management',
-    'Quality control and verification workflows',
-    'Export annotations in multiple formats'
+    'Quality control and verification workflows'
   ];
   
   claimRandomImageIsLoading = false;
@@ -95,6 +94,10 @@ export class HomeComponent {
 			this.router.navigate(['/login']);
 		}
 	}
+
+  redirectToDemo(): void {
+    this.router.navigate(['/demo']);
+  }
 
   claimRandomAndRedirect(): void {
     this.claimRandomImageIsLoading = true;

@@ -13,6 +13,7 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { TutorialModalComponent } from './components/tutorial-modal/tutorial-modal.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
 	{ path: 'register', component: GoogleRegisterComponent },
 	{ path: 'login', component: GoogleLoginComponent },
 	{ path: 'userProfile/edit-pwd', component: ChangePasswordProfileComponent },
-	{ path: 'userProfile/edit-profile', component: EditProfileComponent }
+	{ path: 'userProfile/edit-profile', component: EditProfileComponent },
+	{ path: 'demo', component: TutorialModalComponent }
 ];
 
 @NgModule({
