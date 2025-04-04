@@ -373,8 +373,8 @@ exports.updateAnnotationStatus = (req, res) => {
   const { imageId } = req.params;
   const { status } = req.body;
 
-  if (![1, 2].includes(status)) {
-    return res.status(400).json({ error: 'Invalid status. Must be 1 or 2.' });
+  if (![1, 2, 3].includes(status)) {
+    return res.status(400).json({ error: 'Invalid status. Must be 1, 2 or 3.' });
   }
 
   const activePath = path.join(__dirname, '../data/active_sample.json');

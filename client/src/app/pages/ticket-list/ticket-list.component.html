@@ -7,24 +7,20 @@
             <img [src]="ticket.imageUrl" alt="Ticket Image" class="w-full h-full object-cover" />
           </div>
           <div class="flex-1 p-4">
-            <!-- Entête du ticket -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
                 <p class="text-sm text-gray-500">Ticket ID: {{ ticket.id }}</p>
               </div>
             </div>
-            <!-- Informations complémentaires -->
             <div class="mt-2">
               <p class="text-sm text-gray-500">Submitted: {{ ticket.submittedAgo }}</p>
             </div>
-            <!-- Infos sur l'annotateur -->
             <div class="mt-2">
               <p class="text-sm text-gray-500">
                 Annotator: {{ ticket.annotatorName }} ({{ ticket.annotatorEmail }})
               </p>
             </div>
-            <!-- Nombre de figures -->
             <div class="flex items-center gap-4 mt-4">
               <div class="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -36,7 +32,6 @@
                 <span class="text-sm">{{ ticket.polygonsCount }} figures</span>
               </div>
             </div>
-            <!-- Bouton Edit Image -->
             <div class="flex justify-end mt-4">
               <a [routerLink]="['/edit', ticket.cityFolder, ticket.title]"
                  class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors

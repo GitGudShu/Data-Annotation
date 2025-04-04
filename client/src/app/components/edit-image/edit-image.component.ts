@@ -30,6 +30,7 @@ export class EditImageComponent implements OnInit {
 
   showModal: boolean = false;
   modalType: 'send' | 'review' | null = null;
+  currentUser: any; 
 
   constructor(
     private route: ActivatedRoute,
@@ -40,12 +41,16 @@ export class EditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+    // Récupération de l'utilisateur courant
+    this.userStore.user$.subscribe(user => {
+      this.currentUser = user;
+    });
+
+    // Si un flag modalOpen persiste (ex. refresh pendant modal), redirige vers home
     if (localStorage.getItem('modalOpen') === 'true') {
       this.router.navigate(['/']);
       localStorage.setItem('modalOpen', 'false');
     }
-
 
     this.route.params.subscribe(params => {
       this.city = params['city'];
@@ -66,7 +71,6 @@ export class EditImageComponent implements OnInit {
 
   goToNextImage(): void {
     this.claimRandomImageIsLoading = true;
-
     this.userStore.user$.pipe(take(1)).subscribe(user => {
       this.http.post<{ city: string; imageId: string }>(
         'http://localhost:5000/api/annotations/claim-random',
@@ -86,26 +90,43 @@ export class EditImageComponent implements OnInit {
   }
 
   requestAdminReview(): void {
+    // Cette action est réservée aux annotateurs (admin n'a pas accès)
     this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
       status: 1
     }).subscribe(res => {
       console.log('Requesting admin review!', res);
-      this.modalType = 'send';
+      this.modalType = 'review';
       this.showModal = true;
       localStorage.setItem('modalOpen', 'true');
     });
   }
 
   sendAnnotation(): void {
+    let statusToSend = 2; // Annotateur
+    if (this.currentUser && this.currentUser.role === 'admin') {
+      statusToSend = 3; // Admin envoie avec status 3
+      console.log(statusToSend)
+    }
+
     this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
-      status: 2
-    }).subscribe(res => {
-      console.log('Image sent!', res);
-      this.modalType = 'send';
-      this.showModal = true;
-      localStorage.setItem('modalOpen', 'true');
+      status: statusToSend
+    }).subscribe({
+      next: res => {
+        console.log('Image sent!', res);
+        if (this.currentUser && this.currentUser.role === 'admin') {
+          // Admin : redirection immédiate sans modal
+          this.router.navigate(['/ticket-list']);
+        } else {
+          // Annotateur : ouverture du modal pour choisir Next Image ou Home
+          this.modalType = 'send';
+          this.showModal = true;
+          localStorage.setItem('modalOpen', 'true');
+        }
+      },
+      error: err => {
+        console.error('Send failed:', err);
+      }
     });
-    // alert('Image sent! Faut faire un modal pour proposer de passer à l\'image suivante ou retourner à la page d\'accueil');
   }
 
   onPolygonClick(event: MouseEvent, index: number) {
@@ -193,5 +214,4 @@ export class EditImageComponent implements OnInit {
     localStorage.removeItem('modalOpen');
     this.router.navigate(['/']);
   }
-
 }

@@ -59,7 +59,6 @@ export class UserProfileComponent implements OnInit {
           photoUrl: user.avatar || '/'
         };
 
-        // Appel au backend pour récupérer les images détaillées de l'utilisateur
         this.http.get<{ editableImages: AnnotatedImage[], archivedImages: AnnotatedImage[], tickets: Ticket[] }>(`http://localhost:5000/api/images/getImagesDetails/${user.id}`)
           .subscribe({
             next: (data) => {

@@ -75,34 +75,37 @@ exports.getImagesDetails = (req, res) => {
               status: (annotation.status !== undefined) ? annotation.status : null
             };
 
-            // Classement en fonction du status
             if (imageDetail.status === 0) {
               editableImages.push(imageDetail);
-            } else if (imageDetail.status === 2 || imageDetail.status === 3) {
+            } else if (imageDetail.status === 2) {
               archivedImages.push(imageDetail);
-            } else if (imageDetail.status === 1 || imageDetail.status === 3) {
-              // Pour les tickets, on mappe la valeur numérique en libellé et classe CSS
-              let statusLabel = '';
-              let statusClass = '';
-              if (imageDetail.status === 1) {
-                statusLabel = 'Sent to an administrator for review';
-                statusClass = 'text-blue-500';
-              } else if (imageDetail.status === 3) {
-                statusLabel = 'Processed by an administrator';
-                statusClass = 'text-green-500';
-              }
-
-              // Création de l'objet ticket
+            } else if (imageDetail.status === 1) {
+              let statusLabel = 'Sent to an administrator for review';
+              let statusClass = 'text-yellow-500';
               const ticket = {
-                id: `${testFolder}-${cityFolder}-${baseName}`, // ID généré à partir du chemin
+                id: `${testFolder}-${cityFolder}-${baseName}`,
                 title: baseName,
-                submittedAgo: 'N/A', // À remplacer si vous disposez d'une date
+                submittedAgo: 'N/A',
+                polygonsCount: labelCount,
+                status: statusLabel,
+                statusClass: statusClass
+              };
+              tickets.push(ticket);
+            } else if (imageDetail.status === 3) {
+              archivedImages.push(imageDetail);
+              let statusLabel = 'Processed by an administrator';
+              let statusClass = 'text-green-500';
+              const ticket = {
+                id: `${testFolder}-${cityFolder}-${baseName}`,
+                title: baseName,
+                submittedAgo: 'N/A',
                 polygonsCount: labelCount,
                 status: statusLabel,
                 statusClass: statusClass
               };
               tickets.push(ticket);
             }
+            
           }
         });
       });
