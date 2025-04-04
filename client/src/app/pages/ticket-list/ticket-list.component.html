@@ -1,0 +1,58 @@
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Tickets</h1>
+    <div class="space-y-4">
+      <div *ngFor="let ticket of tickets" class="border rounded-lg overflow-hidden shadow-sm">
+        <div class="flex flex-col sm:flex-row">
+            <div class="w-full sm:w-48 h-auto bg-gray-100 flex-shrink-0">
+            <img [src]="ticket.imageUrl" alt="Ticket Image" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 p-4">
+            <!-- Entête du ticket -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
+                <p class="text-sm text-gray-500">Ticket ID: {{ ticket.id }}</p>
+              </div>
+            </div>
+            <!-- Informations complémentaires -->
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">Submitted: {{ ticket.submittedAgo }}</p>
+            </div>
+            <!-- Infos sur l'annotateur -->
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                Annotator: {{ ticket.annotatorName }} ({{ ticket.annotatorEmail }})
+              </p>
+            </div>
+            <!-- Nombre de figures -->
+            <div class="flex items-center gap-4 mt-4">
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500">
+                  <path d="M12 5v14"></path>
+                  <path d="M18 13l-6 6"></path>
+                  <path d="M6 13l6-6"></path>
+                </svg>
+                <span class="text-sm">{{ ticket.polygonsCount }} figures</span>
+              </div>
+            </div>
+            <!-- Bouton Edit Image -->
+            <div class="flex justify-end mt-4">
+              <a [routerLink]="['/edit', ticket.cityFolder, ticket.title]"
+                 class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2
+                        disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900
+                        h-9 px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                  <path d="m15 5 4 4"></path>
+                </svg>
+                Review the image
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  

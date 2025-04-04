@@ -31,7 +31,8 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 import { ChangePasswordProfileComponent } from './pages/change-password-profile/change-password-profile.component';
 import { StatCardComponent } from './components/stat-card/stat-card.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { DataTableComponent } from './components/data-table/data-table.component'; // Ensure this file exists and is correctly exported
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { TicketListComponent } from './pages/ticket-list/ticket-list.component'; // Ensure this file exists and is correctly exported
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DataTableComponent } from './components/data-table/data-table.component
     StatCardComponent,
     ChartComponent,
     DataTableComponent,
+    TicketListComponent,
   ],
   imports: [
     BrowserModule,

@@ -73,6 +73,17 @@
             class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"
           ></span>
         </a>
+
+        <a
+          *ngIf="user.role === 'admin'"
+          routerLink="/ticket-list"
+          class="text-white/80 hover:text-white relative group py-1 font-medium transition-colors duration-200"
+        >
+          Tickets from annotator
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#FF3366] group-hover:w-full transition-all duration-300"
+          ></span>
+        </a>
       </nav>
     </div>
 

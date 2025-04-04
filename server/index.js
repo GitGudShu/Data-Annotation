@@ -24,12 +24,15 @@ const imageRoutes = require('./routes/images');
 const annotationRoutes = require('./routes/annotations');
 const imageAnnotationsRoute = require('./routes/imageAnnotations'); 
 const authRoutes = require('./routes/auth');
+const ticketRoutes = require('./routes/tickets');
 
 app.use('/api/images', imageRoutes);
 app.use('/api/annotations', annotationRoutes);
 app.use('/api/image-annotations', imageAnnotationsRoute);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/tickets', ticketRoutes);
+
 app.use('/uploads/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
 
 app.use('/images', express.static(path.join(__dirname, 'data', 'val_images')));
