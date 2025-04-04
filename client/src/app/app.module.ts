@@ -29,6 +29,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { DataSampleModalComponent } from './components/data-sample-modal/data-sample-modal.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { ChangePasswordProfileComponent } from './pages/change-password-profile/change-password-profile.component';
+import { StatCardComponent } from './components/stat-card/stat-card.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { DataTableComponent } from './components/data-table/data-table.component'; // Ensure this file exists and is correctly exported
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { ChangePasswordProfileComponent } from './pages/change-password-profile/
     DataSampleModalComponent,
     EditProfileComponent,
     ChangePasswordProfileComponent,
+    StatCardComponent,
+    ChartComponent,
+    DataTableComponent,
   ],
   imports: [
     BrowserModule,
