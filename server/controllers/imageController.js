@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-exports.getImagesForUser = (req, res) => {
+exports.getImagesDetails = (req, res) => {
   try {
     const userId = parseInt(req.params.userId, 10);
 
@@ -12,7 +12,9 @@ exports.getImagesForUser = (req, res) => {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
-    const results = [];
+    const editableImages = [];
+    const archivedImages = [];
+    const tickets = [];
 
     testFolders.forEach((testFolder) => {
       const testFolderPath = path.join(baseSamplesPath, testFolder);
@@ -49,30 +51,64 @@ exports.getImagesForUser = (req, res) => {
             return;
           }
 
+          // On ne traite que les images appartenant à l'utilisateur
           if (annotation.author === userId) {
             const baseName = jsonFile.replace('_gtFine_polygons.json', '');
             const imageFileName = `${baseName}_leftImg8bit.png`;
             const imageUrl = `http://localhost:5000/images/${cityFolder}/${imageFileName}`;
             const labelCount = annotation.objects ? annotation.objects.length : 0;
-            
             const filledDescriptions = annotation.objects 
               ? annotation.objects.filter(obj => obj.description && obj.description.trim() !== '').length 
               : 0;
 
-            results.push({
+            // Construction de l'objet image
+            const imageDetail = {
               testFolder: testFolder,
               cityFolder: cityFolder,
               fileName: baseName,
               labelCount: labelCount,
               descriptions: `${filledDescriptions}/${labelCount}`,
-              imageUrl: imageUrl
-            });
+              imageUrl: imageUrl,
+              imgHeight: annotation.imgHeight || null,
+              imgWidth: annotation.imgWidth || null,
+              author: annotation.author,
+              status: (annotation.status !== undefined) ? annotation.status : null
+            };
+
+            // Classement en fonction du status
+            if (imageDetail.status === 0) {
+              editableImages.push(imageDetail);
+            } else if (imageDetail.status === 2 || imageDetail.status === 3) {
+              archivedImages.push(imageDetail);
+            } else if (imageDetail.status === 1 || imageDetail.status === 3) {
+              // Pour les tickets, on mappe la valeur numérique en libellé et classe CSS
+              let statusLabel = '';
+              let statusClass = '';
+              if (imageDetail.status === 1) {
+                statusLabel = 'Sent to an administrator for review';
+                statusClass = 'text-blue-500';
+              } else if (imageDetail.status === 3) {
+                statusLabel = 'Processed by an administrator';
+                statusClass = 'text-green-500';
+              }
+
+              // Création de l'objet ticket
+              const ticket = {
+                id: `${testFolder}-${cityFolder}-${baseName}`, // ID généré à partir du chemin
+                title: baseName,
+                submittedAgo: 'N/A', // À remplacer si vous disposez d'une date
+                polygonsCount: labelCount,
+                status: statusLabel,
+                statusClass: statusClass
+              };
+              tickets.push(ticket);
+            }
           }
         });
       });
     });
 
-    return res.json(results);
+    return res.json({ editableImages, archivedImages, tickets });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

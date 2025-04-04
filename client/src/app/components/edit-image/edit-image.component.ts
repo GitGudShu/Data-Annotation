@@ -28,6 +28,9 @@ export class EditImageComponent implements OnInit {
   polygons: PolygonViewModel[] = [];
   claimRandomImageIsLoading: boolean = false;
 
+  showModal: boolean = false;
+  modalType: 'send' | 'review' | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -37,6 +40,13 @@ export class EditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
+    if (localStorage.getItem('modalOpen') === 'true') {
+      this.router.navigate(['/']);
+      localStorage.setItem('modalOpen', 'false');
+    }
+
+
     this.route.params.subscribe(params => {
       this.city = params['city'];
       this.imageId = params['id'];
@@ -80,8 +90,10 @@ export class EditImageComponent implements OnInit {
       status: 1
     }).subscribe(res => {
       console.log('Requesting admin review!', res);
+      this.modalType = 'send';
+      this.showModal = true;
+      localStorage.setItem('modalOpen', 'true');
     });
-    alert('Requesting admin review!');
   }
 
   sendAnnotation(): void {
@@ -89,8 +101,11 @@ export class EditImageComponent implements OnInit {
       status: 2
     }).subscribe(res => {
       console.log('Image sent!', res);
+      this.modalType = 'send';
+      this.showModal = true;
+      localStorage.setItem('modalOpen', 'true');
     });
-    alert('Image sent! Faut faire un modal pour proposer de passer à l\'image suivante ou retourner à la page d\'accueil');
+    // alert('Image sent! Faut faire un modal pour proposer de passer à l\'image suivante ou retourner à la page d\'accueil');
   }
 
   onPolygonClick(event: MouseEvent, index: number) {
@@ -166,4 +181,17 @@ export class EditImageComponent implements OnInit {
     this.displayedWidth = img.clientWidth;
     this.displayedHeight = img.clientHeight;
   }
+
+  onModalNext(): void {
+    this.showModal = false;
+    localStorage.removeItem('modalOpen');
+    this.goToNextImage();
+  }
+
+  onModalHome(): void {
+    this.showModal = false;
+    localStorage.removeItem('modalOpen');
+    this.router.navigate(['/']);
+  }
+
 }
