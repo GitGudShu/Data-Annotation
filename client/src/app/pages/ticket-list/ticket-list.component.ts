@@ -22,6 +22,8 @@ interface Ticket {
   styleUrls: ['./ticket-list.component.css']
 })
 export class TicketListComponent implements OnInit {
+  isLoadingTickets = true
+
   tickets: Ticket[] = [];
 
   constructor(private http: HttpClient) { }
@@ -31,9 +33,12 @@ export class TicketListComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.tickets = data.tickets;
+          this.isLoadingTickets = false;
         },
         error: (err) => {
           console.error('Error loading tickets', err);
+          this.isLoadingTickets = false;
+          this.tickets = []; // Set empty array on error
         }
       });
   }
