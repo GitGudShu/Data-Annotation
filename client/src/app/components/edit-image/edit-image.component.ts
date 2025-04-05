@@ -100,7 +100,7 @@ export class EditImageComponent implements OnInit {
   }
 
   sendAnnotation(): void {
-    let statusToSend = 2; // Annotateur send their annotation without review
+    let statusToSend = 2; // Annotator send their annotation without review
     if (this.currentUser && this.currentUser.role === 'admin') {
       statusToSend = 3; // Admin validate the annotation (same kind of status as 2 but implies that the image was reviewed)
       console.log(statusToSend)
@@ -112,7 +112,7 @@ export class EditImageComponent implements OnInit {
       next: res => {
         console.log('Image sent!', res);
         if (this.currentUser && this.currentUser.role === 'admin') {
-          this.router.navigate(['/ticket-list']);
+          this.router.navigate(['/dashboard']);
         } else {
           this.modalType = 'send';
           this.showModal = true;

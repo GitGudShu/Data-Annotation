@@ -147,6 +147,7 @@
     <app-data-sample-modal
       *ngIf="isCreateModalOpen"
       [allClasses]="allClasses"
+      [loading]="isCreating"
       (close)="isCreateModalOpen = false"
       (submit)="createDataSample($event)"
     ></app-data-sample-modal>

@@ -7,6 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DataSampleModalComponent {
   @Input() allClasses: string[] = [];
+  @Input() loading: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<{ name: string; classes: string[] }>();
 

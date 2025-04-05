@@ -19,7 +19,7 @@ export class AdminPanelComponent implements OnInit {
   activeSampleName: string | null = null;
 
   isCreateModalOpen = false;
-  activeTab = "samples";
+  activeTab = "tickets";
 
   tabs: Tab[] = [
     {
@@ -52,12 +52,22 @@ export class AdminPanelComponent implements OnInit {
     this.isCreateModalOpen = true;
   }
 
+  isCreating = false;
+
   createDataSample(data: { name: string; classes: string[] }): void {
+    this.isCreating = true;
     this.adminService.createDataSample(data.name, data.classes).subscribe({
-      next: () => this.isCreateModalOpen = false,
-      error: (err) => console.error("Sample creation failed:", err),
+      next: () => {
+        this.isCreating = false;
+        this.isCreateModalOpen = false;
+      },
+      error: (err) => {
+        console.error("Sample creation failed:", err);
+        this.isCreating = false;
+      },
     });
   }
+
 
   setActiveSample(sample: DataSample): void {
     this.adminService.setActiveSample(sample.safeName);
