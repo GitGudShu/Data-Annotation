@@ -181,7 +181,21 @@ exports.createDataSample = (req, res) => {
     let annotedCount = 0;
 
     // list of classes to be filtered
-    const filteredClasses = ['car', 'cargroup', 'truck', 'bus']
+    const filteredClasses = [
+      "bicycle",
+      "bicyclegroup",
+      "bus",
+      "car",
+      "caravan",
+      "cargroup",
+      "person",
+      "persongroup",
+      "rider",
+      "ridergroup",
+      "train",
+      "truck",
+      "motorcycle"
+    ]
     const minArea = 5000; // Minimum area threshold for polygons <- CHANGE HERE TO YOUR LIKING ;)
 
     for (const city of cities) {
@@ -384,6 +398,7 @@ exports.updateAnnotationStatus = (req, res) => {
 
   const activeSample = JSON.parse(fs.readFileSync(activePath, 'utf-8'));
   const sampleDir = path.join(__dirname, '../data/data_samples', activeSample.safeName);
+  const sampleMetadataPath = path.join(__dirname, '../data/data_samples', `${activeSample.safeName}.json`);
 
   const cities = fs.readdirSync(sampleDir).filter(city => {
     const cityPath = path.join(sampleDir, city);
@@ -395,10 +410,23 @@ exports.updateAnnotationStatus = (req, res) => {
     const filePath = path.join(sampleDir, city, `${imageId}_gtFine_polygons.json`);
     if (fs.existsSync(filePath)) {
       const annotation = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      const wasAnnotated = [2, 3].includes(annotation.status);
       annotation.status = status;
       fs.writeFileSync(filePath, JSON.stringify(annotation, null, 2));
+
+      // Increment annotedCount if new status is 2 or 3 and it wasn't already counted
+      if ((status === 2 || status === 3) && !wasAnnotated) {
+        if (fs.existsSync(sampleMetadataPath)) {
+          const metadata = JSON.parse(fs.readFileSync(sampleMetadataPath, 'utf-8'));
+          metadata.annotedCount = (metadata.annotedCount || 0) + 1;
+          fs.writeFileSync(sampleMetadataPath, JSON.stringify(metadata, null, 2));
+          console.log(`annotedCount updated to ${metadata.annotedCount} for sample ${activeSample.safeName}`);
+        }
+      }
+
       console.log(`Updated status of ${imageId} in city ${city} to ${status}`);
       found = true;
+
       return res.json({ message: 'Status updated successfully.', city, imageId, status });
     }
   }
