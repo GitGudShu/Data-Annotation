@@ -3,6 +3,7 @@ import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserStoreService } from '../../services/user-store.service';
+import { NotificationService } from '../../services/notification.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -11,11 +12,14 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./google-login.component.css']
 })
 export class GoogleLoginComponent {
+  notification: { message: string, type: 'success' | 'error' } | null = null;
+
   constructor(
     private http: HttpClient,
     private auth: Auth,
     private router: Router,
-    private store: UserStoreService
+    private store: UserStoreService,
+    private notificationService: NotificationService
   ) { }
 
   loginWithGoogle() {
@@ -35,18 +39,18 @@ export class GoogleLoginComponent {
               }).subscribe({
                 next: (user) => {
                   this.store.setUser(user);
-                  alert(`Welcome ${user.prenom}`);
+                  this.notificationService.show(`Welcome ${user.prenom}`, 'success');
                   this.router.navigate(['']);
                 },
-                error: () => alert('Failed to load user data')
+                error: () => this.notificationService.show('Failed to load user data :(', 'error')
               });
             },
-            error: () => alert('Login failed')
+            error: () => this.notificationService.show('Login failed :(', 'error')
           });
       })
       .catch(err => {
         console.error(err);
-        alert('Google login error');
+        this.notificationService.show('Google login error :(', 'error');
       });
   }
 
@@ -63,12 +67,12 @@ export class GoogleLoginComponent {
             next: (user) => {
               this.store.setUser(user);
               this.router.navigate(['']);
-              alert(`Welcome ${user.prenom}`);
+              this.notificationService.show(`Welcome ${user.prenom}`, 'success');
             },
-            error: () => alert('Failed to load user data')
+            error: () => this.notificationService.show('Failed to load user data', 'error')
           });
         },
-        error: () => alert('Login failed')
+        error: () => this.notificationService.show('Login failed', 'error')
       });
   }
 

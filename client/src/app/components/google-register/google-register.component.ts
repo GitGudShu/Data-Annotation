@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
+import { NotificationService } from '../../services/notification.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +17,8 @@ export class GoogleRegisterComponent {
 	constructor(
 		private http: HttpClient,
 		private auth: Auth,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
 	) { }
 
 	registerWithGoogle(): void {
@@ -36,16 +38,16 @@ export class GoogleRegisterComponent {
 					.subscribe({
 						next: (res) => {
 							if (res.message === 'already exists') {
-								alert('You are already registered');
-							} else if (res.message === 'created') {
-								alert('Registration successful');
-							} else {
-								alert('Unexpected response from server');
-							}
+                this.notificationService.show('You are already registered', 'error');
+              } else if (res.message === 'created') {
+                this.notificationService.show('Registration successful', 'success');
+              } else {
+                this.notificationService.show('Unexpected response from server', 'error');
+              }
 						},
 						error: (err) => {
 							console.error(err);
-							alert('Internal server error');
+							this.notificationService.show('Registration failed', 'error');
 						}
 					});
 			})
@@ -54,9 +56,9 @@ export class GoogleRegisterComponent {
 				  console.warn('La connexion via popup a été annulée par l\'utilisateur.');
 				} else {
 				  console.error('Error connecting with Google:', error);
-				  alert('Failed Google login');
+				  this.notificationService.show('Google login error :(', 'error');
 				}
-			  });			  
+			  });
 	}
 
 	onFileSelected(event: Event): void {
@@ -85,11 +87,11 @@ export class GoogleRegisterComponent {
 				next: (res) => {
 					console.log('Registration successful', res);
           this.router.navigate(['']);
-					alert('Registration successful');
+					this.notificationService.show('Registration successful', 'success');
 				},
 				error: (err) => {
 					console.error(err);
-					alert('Registration error');
+					this.notificationService.show('Registration failed', 'error');
 				}
 			});
 	}

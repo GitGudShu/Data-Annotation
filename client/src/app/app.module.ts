@@ -11,7 +11,6 @@ import { ImageListComponent } from './components/imageList/imageList.component';
 import { AnnotationComponent } from './pages/annotation/annotation.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { AnnotationFormComponent } from './components/annotation-form/annotation-form.component';
-import { TutorialModalComponent } from './components/tutorial-modal/tutorial-modal.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ImageCardComponent } from './components/image-card/image-card.component';
 import { ImageIdParserPipe } from './pipes/image-id-parser.pipe';
@@ -41,7 +40,6 @@ import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
     AnnotationComponent,
     AdminPanelComponent,
     AnnotationFormComponent,
-    TutorialModalComponent,
     NavbarComponent,
     ImageCardComponent,
     ImageIdParserPipe,
