@@ -12,14 +12,28 @@
 
     <!-- Loading -->
     <div *ngIf="isLoadingSamples" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 animate-pulse">
-      <div *ngFor="let n of [1,2,3,4,5,6]" class="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
-        <div class="h-4 bg-gray-300 rounded w-1/2 mb-3"></div>
-        <div class="h-3 bg-gray-200 rounded w-full mb-2"></div>
-        <div class="flex flex-wrap gap-2">
-          <div class="w-16 h-6 bg-gray-200 rounded-md"></div>
-          <div class="w-20 h-6 bg-gray-200 rounded-md"></div>
-          <div class="w-12 h-6 bg-gray-200 rounded-md"></div>
-        </div>
+      <div class="flex items-center justify-center space-x-2">
+        <svg
+          class="animate-spin h-5 w-5 text-purple-600"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+          />
+        </svg>
+        <span class="text-gray-700 font-medium">Loading...</span>
       </div>
     </div>
 
