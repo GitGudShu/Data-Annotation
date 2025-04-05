@@ -90,7 +90,7 @@ export class EditImageComponent implements OnInit {
   }
 
   requestAdminReview(): void {
-    // Cette action est réservée aux annotateurs (admin n'a pas accès)
+    this.saveAnnotation();
     this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
       status: 1
     }).subscribe(res => {

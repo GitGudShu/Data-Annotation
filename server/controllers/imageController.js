@@ -51,7 +51,6 @@ exports.getImagesDetails = (req, res) => {
             return;
           }
 
-          // On ne traite que les images appartenant à l'utilisateur
           if (annotation.author === userId) {
             const baseName = jsonFile.replace('_gtFine_polygons.json', '');
             const imageFileName = `${baseName}_leftImg8bit.png`;
