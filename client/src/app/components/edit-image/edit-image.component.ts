@@ -30,7 +30,7 @@ export class EditImageComponent implements OnInit {
 
   showModal: boolean = false;
   modalType: 'send' | 'review' | null = null;
-  currentUser: any; 
+  currentUser: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,12 +41,10 @@ export class EditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupération de l'utilisateur courant
     this.userStore.user$.subscribe(user => {
       this.currentUser = user;
     });
 
-    // Si un flag modalOpen persiste (ex. refresh pendant modal), redirige vers home
     if (localStorage.getItem('modalOpen') === 'true') {
       this.router.navigate(['/']);
       localStorage.setItem('modalOpen', 'false');
@@ -102,9 +100,9 @@ export class EditImageComponent implements OnInit {
   }
 
   sendAnnotation(): void {
-    let statusToSend = 2; // Annotateur
+    let statusToSend = 2; // Annotateur send their annotation without review
     if (this.currentUser && this.currentUser.role === 'admin') {
-      statusToSend = 3; // Admin envoie avec status 3
+      statusToSend = 3; // Admin validate the annotation (same kind of status as 2 but implies that the image was reviewed)
       console.log(statusToSend)
     }
 
@@ -114,10 +112,8 @@ export class EditImageComponent implements OnInit {
       next: res => {
         console.log('Image sent!', res);
         if (this.currentUser && this.currentUser.role === 'admin') {
-          // Admin : redirection immédiate sans modal
           this.router.navigate(['/ticket-list']);
         } else {
-          // Annotateur : ouverture du modal pour choisir Next Image ou Home
           this.modalType = 'send';
           this.showModal = true;
           localStorage.setItem('modalOpen', 'true');

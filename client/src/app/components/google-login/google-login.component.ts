@@ -36,7 +36,7 @@ export class GoogleLoginComponent {
                 next: (user) => {
                   this.store.setUser(user);
                   alert(`Welcome ${user.prenom}`);
-                  this.router.navigate(['/imageList']);
+                  this.router.navigate(['']);
                 },
                 error: () => alert('Failed to load user data')
               });
