@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UserStoreService } from '../../services/user-store.service'; 
+import { UserStoreService } from '../../services/user-store.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -23,7 +24,8 @@ export class EditProfileComponent implements OnInit {
     private http: HttpClient,
     private userStore: UserStoreService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class EditProfileComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log('Update successful', res);
+          this.notificationService.show('Profile updated successfully!', 'success');
           this.userStore.setUser(res);
           this.router.navigate(['/userProfile'], { state: { successAlert: 'Profile updated successfully' } });
         },

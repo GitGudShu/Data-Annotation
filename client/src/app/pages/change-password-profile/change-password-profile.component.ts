@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserStoreService } from '../../services/user-store.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-change-password-profile',
@@ -24,7 +25,8 @@ export class ChangePasswordProfileComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private userStore: UserStoreService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -54,9 +56,11 @@ export class ChangePasswordProfileComponent implements OnInit {
       newPassword: this.newPassword
     }, { headers }).subscribe({
       next: (res: any) => {
+        this.notificationService.show('Password updated successfully!', 'success');
         this.router.navigate(['/userProfile'], { state: { successAlert: 'Password updated successfully' } });
       },
       error: (err) => {
+        this.notificationService.show('Error updating password', 'error');
         this.error = err.error.message || 'Error updating password.';
       }
     });
