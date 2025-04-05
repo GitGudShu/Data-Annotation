@@ -29,6 +29,7 @@ import { DataSampleModalComponent } from './components/data-sample-modal/data-sa
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { ChangePasswordProfileComponent } from './pages/change-password-profile/change-password-profile.component';
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
     EditProfileComponent,
     ChangePasswordProfileComponent,
     TicketListComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
