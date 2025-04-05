@@ -1,25 +1,32 @@
 <div class="max-w-5xl mx-auto px-4 py-8">
   <h1 class="text-3xl font-bold mb-8">Profile</h1>
 
-  <!-- Profile Information -->
+  <!-- Profile card -->
   <div class="flex flex-col md:flex-row gap-6 mb-8 items-stretch">
-    <div class="order-1 w-full md:w-64 bg-gray-100 rounded-md overflow-hidden">
-      <img [src]="profile.photoUrl" alt="Photo de profil" class="w-full h-full object-cover" />
+    <div class="order-1 w-full md:w-64 bg-gray-100 rounded-lg overflow-hidden shadow-md h-64 md:h-auto">
+      <div *ngIf="isLoading" class="w-full h-full flex items-center justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      </div>
+      <img *ngIf="!isLoading" [src]="profile.photoUrl || '/placeholder.svg?height=300&width=300'" alt="Profile photo" class="w-full h-full object-cover" />
     </div>
 
     <div class="order-2 w-full md:flex-1">
-      <div class="h-full border rounded-lg shadow-sm">
+      <div class="h-full border rounded-lg shadow-sm bg-white">
         <div class="p-6">
-          <div class="space-y-2">
-            <div class="flex justify-between">
+          <div *ngIf="isLoading" class="flex justify-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          </div>
+
+          <div *ngIf="!isLoading" class="space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b">
               <p class="text-sm text-gray-500">Last Name</p>
               <p class="font-medium">{{ profile.lastName }}</p>
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center pb-3 border-b">
               <p class="text-sm text-gray-500">First Name</p>
               <p class="font-medium">{{ profile.firstName }}</p>
             </div>
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center pb-3 border-b">
               <p class="text-sm text-gray-500">Email</p>
               <p class="font-medium">{{ profile.email }}</p>
             </div>
@@ -27,8 +34,7 @@
         </div>
         <div class="px-6 pb-6 flex flex-col sm:flex-row gap-2 justify-end mt-auto">
           <a routerLink="/userProfile/edit-pwd"
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
-
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-10 px-4 py-2 shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="h-4 w-4 mr-2">
@@ -38,7 +44,7 @@
             Change Password
           </a>
           <a routerLink="/userProfile/edit-profile"
-            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-9 px-4 py-2">
+            class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 h-10 px-4 py-2 shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="h-4 w-4 mr-2">
@@ -52,115 +58,209 @@
     </div>
   </div>
 
-<div class="mb-8">
-  <h2 class="text-2xl font-bold mb-4">My Editable Images</h2>
-  <div class="space-y-4">
-    <div *ngFor="let image of editableImages" class="border rounded-lg overflow-hidden shadow-sm">
-      <div class="flex flex-col sm:flex-row">
-        <div class="w-full sm:w-48 h-auto bg-gray-100 flex-shrink-0">
-          <img
-            [src]="image.imageUrl"
-            alt="Image annotée"
-            class="w-full h-full object-cover"
-          />
-        </div>
+  <!-- Content Tabs -->
+  <div class="mb-8">
+    <div class="border-b border-gray-200 mb-6">
+      <nav class="flex space-x-8" aria-label="Content Tabs">
+        <button
+          *ngFor="let tab of tabs"
+          (click)="activeTab = tab.id"
+          class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap flex items-center gap-2"
+          [class.border-purple-500]="activeTab === tab.id"
+          [class.text-purple-600]="activeTab === tab.id"
+          [class.border-transparent]="activeTab !== tab.id"
+          [class.text-gray-500]="activeTab !== tab.id"
+          [class.hover:text-gray-700]="activeTab !== tab.id"
+          [class.hover:border-gray-300]="activeTab !== tab.id">
+          <span [innerHTML]="tab.icon" class="h-5 w-5"></span>
+          {{ tab.name }}
+          <span class="bg-gray-100 text-gray-700 ml-1 py-0.5 px-2.5 rounded-full text-xs font-medium">
+            {{ getItemCount(tab.id) }}
+          </span>
+        </button>
+      </nav>
+    </div>
 
-        <div class="flex-1 p-4">
-          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="font-semibold text-lg">{{ image.fileName }}</h3>
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="flex justify-center py-12">
+      <div class="flex flex-col items-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600"></div>
+        <p class="mt-4 text-gray-600">Loading your content...</p>
+      </div>
+    </div>
+
+    <!-- Editable Images Tab Content -->
+    <div *ngIf="!isLoading && activeTab === 'editable'" class="space-y-4">
+      <div *ngIf="editableImages.length === 0" class="text-center py-12 bg-gray-50 rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto h-12 w-12 text-gray-400">
+          <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+          <circle cx="9" cy="9" r="2"></circle>
+          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+        </svg>
+        <h3 class="mt-2 text-sm font-semibold text-gray-900">No editable images</h3>
+        <p class="mt-1 text-sm text-gray-500">Get started by claiming an image to edit.</p>
+      </div>
+
+      <div *ngFor="let image of editableImages" class="border rounded-lg overflow-hidden shadow-sm bg-white hover:shadow-md transition-shadow">
+        <div class="flex flex-col sm:flex-row">
+          <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0 relative">
+            <img [src]="image.imageUrl" alt="Annotated image" class="w-full h-full object-cover" />
+            <div class="absolute bottom-0 right-0 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-tl-md">
+              {{ image.labelCount }} figures
+            </div>
+          </div>
+
+          <div class="flex-1 p-4">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-lg">{{ image.fileName }}</h3>
+                </div>
+                <div class="mt-2 space-y-1">
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
+                    </svg>
+                    Sample: {{ image.testFolder }}
+                  </p>
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    City: {{ image.cityFolder | titlecase }}
+                  </p>
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Descriptions: {{ image.descriptions || 'None' }}
+                  </p>
+                </div>
               </div>
-              <p class="text-sm text-gray-500">Sample : {{ image.testFolder }}</p>
-              <p class="text-sm text-gray-500">City : {{ image.cityFolder | titlecase }}</p>
-              <p class="text-sm text-gray-500">Descriptions on object : {{ image.descriptions }}</p>
             </div>
-          </div>
-          <div class="flex items-center gap-4 mt-4">
-            <div class="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500">
-                <path d="M12 5v14"></path>
-                <path d="M18 13l-6 6"></path>
-                <path d="M6 13l6 6"></path>
-              </svg>
-              <span class="text-sm">{{ image.labelCount }} figures</span>
+
+            <div class="flex justify-end mt-4">
+              <a [routerLink]="['/edit', image.cityFolder, image.fileName]"
+                 class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-2
+                        disabled:pointer-events-none disabled:opacity-50 bg-purple-600 text-white hover:bg-purple-700
+                        h-10 px-4 py-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
+                  <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                  <path d="m15 5 4 4"></path>
+                </svg>
+                Edit Image
+              </a>
             </div>
-          </div>
-          <div class="flex justify-between mt-4">
-            <a [routerLink]="['/edit', image.cityFolder, image.fileName]"
-               class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2
-                      disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900
-                      h-9 px-4 py-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
-                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                <path d="m15 5 4 4"></path>
-              </svg>
-              Edit Image
-            </a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
+    <!-- Annotated Images Tab Content -->
+    <div *ngIf="!isLoading && activeTab === 'annotated'" class="space-y-4">
+      <div *ngIf="archivedImages.length === 0" class="text-center py-12 bg-gray-50 rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto h-12 w-12 text-gray-400">
+          <path d="M21 8v13H3V8"></path>
+          <path d="M1 3h22v5H1z"></path>
+          <path d="M10 12h4"></path>
+        </svg>
+        <h3 class="mt-2 text-sm font-semibold text-gray-900">No annotated images</h3>
+        <p class="mt-1 text-sm text-gray-500">Your completed annotations will appear here.</p>
+      </div>
 
-<div class="mb-8">
-  <h2 class="text-2xl font-bold mb-4">My Annotated Images</h2>
-  <div class="space-y-4">
-    <div *ngFor="let image of archivedImages" class="border rounded-lg overflow-hidden shadow-sm">
-      <div class="flex flex-col sm:flex-row">
-        <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0">
-          <img [src]="image.imageUrl" alt="Image annotée" class="w-full h-full object-cover" />
-        </div>
-        <div class="flex-1 p-4">
-          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="font-semibold text-lg">{{ image.fileName }}</h3>
-              </div>
-              <p class="text-sm text-gray-500">Sample : {{ image.testFolder }}</p>
-              <p class="text-sm text-gray-500">City : {{ image.cityFolder | titlecase }}</p>
-              <p class="text-sm text-gray-500">Descriptions on object : {{ image.descriptions }}</p>
+      <div *ngFor="let image of archivedImages" class="border rounded-lg overflow-hidden shadow-sm bg-white hover:shadow-md transition-shadow">
+        <div class="flex flex-col sm:flex-row">
+          <div class="w-full sm:w-48 h-48 bg-gray-100 flex-shrink-0 relative">
+            <img [src]="image.imageUrl" alt="Annotated image" class="w-full h-full object-cover" />
+            <div class="absolute bottom-0 right-0 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-tl-md">
+              {{ image.labelCount }} figures
             </div>
           </div>
-          <div class="flex items-center gap-4 mt-4">
-            <div class="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500">
-                <path d="M12 5v14"></path>
-                <path d="M18 13l-6 6"></path>
-                <path d="M6 13l6 6"></path>
-              </svg>
-              <span class="text-sm">{{ image.labelCount }} figures</span>
+          <div class="flex-1 p-4">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-lg">{{ image.fileName }}</h3>
+                  <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                    Completed
+                  </span>
+                </div>
+                <div class="mt-2 space-y-1">
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
+                    </svg>
+                    Sample: {{ image.testFolder }}
+                  </p>
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    City: {{ image.cityFolder | titlecase }}
+                  </p>
+                  <p class="text-sm text-gray-500 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Descriptions: {{ image.descriptions || 'None' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end mt-4">
+              <button
+                 class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2
+                        disabled:pointer-events-none disabled:opacity-50 border border-gray-200 bg-white hover:bg-gray-100
+                        h-10 px-4 py-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" x2="12" y1="15" y2="3"></line>
+                </svg>
+                Download
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="mb-8">
-  <h2 class="text-2xl font-bold mb-4">Tickets</h2>
-  <div class="space-y-4">
-    <div *ngFor="let ticket of tickets" class="border rounded-lg overflow-hidden shadow-sm">
-      <div class="flex flex-col sm:flex-row">
-        <div class="flex-1 p-4">
+    <!-- Tickets Tab Content -->
+    <div *ngIf="!isLoading && activeTab === 'tickets'" class="space-y-4">
+      <div *ngIf="tickets.length === 0" class="text-center py-12 bg-gray-50 rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto h-12 w-12 text-gray-400">
+          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        <h3 class="mt-2 text-sm font-semibold text-gray-900">No tickets</h3>
+        <p class="mt-1 text-sm text-gray-500">You haven't submitted any tickets yet.</p>
+      </div>
+
+      <div *ngFor="let ticket of tickets" class="border rounded-lg overflow-hidden shadow-sm bg-white hover:shadow-md transition-shadow">
+        <div class="p-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
+              <div class="flex items-center gap-2">
+                <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
+                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                      [ngClass]="{
+                        'bg-yellow-100 text-yellow-800': ticket.status === 'Pending',
+                        'bg-green-100 text-green-800': ticket.status === 'Resolved',
+                        'bg-blue-100 text-blue-800': ticket.status === 'In Progress',
+                        'bg-red-100 text-red-800': ticket.status === 'Rejected'
+                      }">
+                  {{ ticket.status }}
+                </span>
+              </div>
               <p class="text-sm text-gray-500">Ticket ID: {{ ticket.id }}</p>
+              <p class="text-sm text-gray-500">Submitted: {{ ticket.submittedAgo }}</p>
             </div>
-            <div>
-              <span class="text-sm font-medium {{ ticket.statusClass }}">{{ ticket.status }}</span>
-            </div>
-          </div>
-          <div class="mt-2">
-            <p class="text-sm text-gray-500">Submitted: {{ ticket.submittedAgo }}</p>
           </div>
           <div class="flex items-center gap-4 mt-4">
             <div class="flex items-center gap-1">
@@ -179,4 +279,3 @@
   </div>
 </div>
 
-</div>
