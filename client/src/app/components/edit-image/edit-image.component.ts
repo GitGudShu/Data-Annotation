@@ -29,8 +29,10 @@ export class EditImageComponent implements OnInit {
   claimRandomImageIsLoading: boolean = false;
 
   showModal: boolean = false;
-  modalType: 'send' | 'review' | null = null;
+  modalType: 'send' | 'review' | 'reviewComplete' | null = null;
   currentUser: any;
+
+  mode: 'annotation' | 'review' = 'annotation';
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +43,15 @@ export class EditImageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const modeParam = params.get('mode');
+      if (modeParam === 'review') {
+        this.mode = 'review';
+      } else {
+        this.mode = 'annotation';
+      }
+    });
+
     this.userStore.user$.subscribe(user => {
       this.currentUser = user;
     });
@@ -88,41 +99,62 @@ export class EditImageComponent implements OnInit {
   }
 
   requestAdminReview(): void {
-    this.saveAnnotation();
-    this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
-      status: 1
-    }).subscribe(res => {
-      console.log('Requesting admin review!', res);
-      this.modalType = 'review';
-      this.showModal = true;
-      localStorage.setItem('modalOpen', 'true');
-    });
-  }
-
-  sendAnnotation(): void {
-    let statusToSend = 2; // Annotator send their annotation without review
-    if (this.currentUser && this.currentUser.role === 'admin') {
-      statusToSend = 3; // Admin validate the annotation (same kind of status as 2 but implies that the image was reviewed)
-      console.log(statusToSend)
+    if (this.selectedPolygonIndex !== null) {
+      this.polygons[this.selectedPolygonIndex].dangerLevel = this.dangerLevel;
+      this.polygons[this.selectedPolygonIndex].description = this.annotationDescription;
     }
-
-    this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
-      status: statusToSend
-    }).subscribe({
+  
+    this.annotationService.saveAnnotation(this.city, this.imageId, this.polygons).subscribe({
       next: res => {
-        console.log('Image sent!', res);
-        if (this.currentUser && this.currentUser.role === 'admin') {
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.modalType = 'send';
+        console.log('Annotations saved:', res);
+        this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, {
+          status: 1
+        }).subscribe(patchRes => {
+          console.log('Requesting admin review!', patchRes);
+          this.modalType = 'review';
           this.showModal = true;
           localStorage.setItem('modalOpen', 'true');
-        }
+        });
       },
       error: err => {
-        console.error('Send failed:', err);
+        console.error('Save failed:', err);
       }
     });
+  }
+  
+
+  sendAnnotation(): void {
+    if (this.currentUser && this.currentUser.role === 'admin' && this.mode === 'review') {
+      this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, { status: 3 })
+        .subscribe({
+          next: res => {
+            console.log('Admin review complete!', res);
+            this.modalType = 'reviewComplete';
+            this.showModal = true;
+            localStorage.setItem('modalOpen', 'true');
+          },
+          error: err => {
+            console.error('Send failed:', err);
+          }
+        });
+    } else {
+      let statusToSend = 2;
+      if (this.currentUser && this.currentUser.role === 'admin') {
+        console.log('Admin annotation mode');
+      }
+      this.http.patch(`http://localhost:5000/api/annotations/status/${this.imageId}`, { status: statusToSend })
+        .subscribe({
+          next: res => {
+            console.log('Image sent!', res);
+            this.modalType = 'send';
+            this.showModal = true;
+            localStorage.setItem('modalOpen', 'true');
+          },
+          error: err => {
+            console.error('Send failed:', err);
+          }
+        });
+    }
   }
 
   onPolygonClick(event: MouseEvent, index: number) {
@@ -209,5 +241,11 @@ export class EditImageComponent implements OnInit {
     this.showModal = false;
     localStorage.removeItem('modalOpen');
     this.router.navigate(['/']);
+  }
+
+  onModalYes(): void {
+    this.showModal = false;
+    localStorage.removeItem('modalOpen');
+    this.router.navigate(['/dashboard']);
   }
 }

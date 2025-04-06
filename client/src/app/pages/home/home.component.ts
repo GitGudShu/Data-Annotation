@@ -65,22 +65,36 @@ export class HomeComponent {
 
   claimRandomAndRedirect(): void {
     this.claimRandomImageIsLoading = true;
-
     this.userStore.user$.subscribe(user => {
-      this.http.post<{ city: string; imageId: string }>(
-        'http://localhost:5000/api/annotations/claim-random',
-        { userId: user.id }
-      ).subscribe({
-        next: ({ city, imageId }) => {
-          this.claimRandomImageIsLoading = false;
-          this.router.navigate(['/edit', city, imageId]);
-        },
-        error: err => {
-          console.error('No available image:', err);
-          alert('No images left to annotate.');
-        }
-      });
+      if (user.role === 'admin') {
+        this.http.post<{ city: string; imageId: string }>(
+          'http://localhost:5000/api/annotations/claim-random',
+          { userId: user.id }
+        ).subscribe({
+          next: ({ city, imageId }) => {
+            this.claimRandomImageIsLoading = false;
+            this.router.navigate(['/edit', city, imageId, { mode: 'annotation' }]);
+          },
+          error: err => {
+            console.error('No available image:', err);
+            alert('No images left to annotate.');
+          }
+        });
+      } else {
+        this.http.post<{ city: string; imageId: string }>(
+          'http://localhost:5000/api/annotations/claim-random',
+          { userId: user.id }
+        ).subscribe({
+          next: ({ city, imageId }) => {
+            this.claimRandomImageIsLoading = false;
+            this.router.navigate(['/edit', city, imageId]);
+          },
+          error: err => {
+            console.error('No available image:', err);
+            alert('No images left to annotate.');
+          }
+        });
+      }
     });
   }
-
 }
