@@ -71,6 +71,7 @@ export class AdminPanelComponent implements OnInit {
 
   setActiveSample(sample: DataSample): void {
     this.adminService.setActiveSample(sample.safeName);
+    this.adminService.fetchTickets();
   }
 
   getItemCount(tabId: string): number {
