@@ -19,7 +19,7 @@ export class AdminPanelComponent implements OnInit {
   activeSampleName: string | null = null;
 
   isCreateModalOpen = false;
-  activeTab = "tickets";
+  activeTab = "samples";
 
   tabs: Tab[] = [
     {
